@@ -12,6 +12,7 @@ import { useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import { Offcanvas } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+// import { SearchContext } from '../context/SearchContext2';
 import { SearchContext } from '../context/searchContext';
 import { useNavigate } from 'react-router-dom';
 

@@ -5,7 +5,7 @@ import App from './App.jsx'
 import AuthProvider from './context/AuthProvider'
 import { CartProvider } from './context/CartContext';
 // import { SearchProvider } from './context/searchContext'
-import { SearchProvider } from './context/SearchContext';
+import { SearchProvider } from './context/searchContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
