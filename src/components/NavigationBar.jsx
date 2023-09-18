@@ -4,10 +4,10 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { VscAccount } from 'react-icons/vsc'
-import { FiHeart } from 'react-icons/Fi'
+import { FiHeart } from 'react-icons/fi'
 import { useState } from 'react';
-import { BiSearch } from 'react-icons/Bi'
-import { BsCart } from 'react-icons/Bs'
+import { BiSearch } from 'react-icons/bi'
+import { BsCart } from 'react-icons/bs'
 import { useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import { Offcanvas } from 'react-bootstrap';
