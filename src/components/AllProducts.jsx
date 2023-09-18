@@ -15,7 +15,7 @@ import { Container } from 'react-bootstrap';
 import { getAllProducts, getAllReviews } from '../api';
 
 //Import Context
-import { SearchContext } from '../context/searchContext';
+import { SearchContext } from '../context/SearchContext';
 import AuthContext from '../context/AuthContext';// update2
 
 function AllProducts() {
