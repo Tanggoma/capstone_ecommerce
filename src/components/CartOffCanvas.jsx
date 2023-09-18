@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Button, Offcanvas, Stack } from 'react-bootstrap';
 import { getProductDetail } from '../api';
-import { RiDeleteBin6Line } from 'react-icons/Ri';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 
 function CartOffCanvas({ show, onHide }) {

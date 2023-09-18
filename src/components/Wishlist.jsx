@@ -3,7 +3,7 @@ import { getWishListByUser, deleteWishlist } from '../api'
 import { Card } from 'react-bootstrap';
 import { ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { GiHeartMinus } from 'react-icons/Gi';
+import { GiHeartMinus } from 'react-icons/gi';
 import { Container, Row } from 'react-bootstrap';
 
 const Wishlist = () => {

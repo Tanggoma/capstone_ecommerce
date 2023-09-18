@@ -4,7 +4,7 @@ import { useState } from 'react';
 import WriteReviewModal from './WriteReviewModal';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { HiSearch } from 'react-icons/Hi'
+import { HiSearch } from 'react-icons/hi'
 
 function ReviewsDetails({ reviews, ratingValue }) {
 

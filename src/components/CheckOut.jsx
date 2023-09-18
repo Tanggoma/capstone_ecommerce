@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CartContext } from '../context/CartContext';
 import { getProductDetail } from '../api';
-import { RiDeleteBin6Line } from 'react-icons/Ri';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const CheckOut = () => {
 

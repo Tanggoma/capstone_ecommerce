@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Col, Container, Row } from 'react-bootstrap';
 import ReactRating from 'react-rating-stars-component';
-import { FiHeart } from 'react-icons/Fi'
+import { FiHeart } from 'react-icons/fi'
 import { Modal } from 'react-bootstrap';
 
 
