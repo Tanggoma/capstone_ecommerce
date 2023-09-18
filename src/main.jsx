@@ -7,7 +7,6 @@ import { CartProvider } from './context/CartContext';
 // import { SearchProvider } from './context/searchContext'
 import { SearchProvider } from './context/SearchContext';
 
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>

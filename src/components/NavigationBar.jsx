@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { VscAccount } from 'react-icons/Vsc'
+import { VscAccount } from 'react-icons/vsc'
 import { FiHeart } from 'react-icons/Fi'
 import { useState } from 'react';
 import { BiSearch } from 'react-icons/Bi'
