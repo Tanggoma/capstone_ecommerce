@@ -1,0 +1,117 @@
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+#signin-button {
+  background-color: rgba(237, 7, 7, 0.785);
+  border: black 2px solid;
+  color: rgb(255, 249, 249);
+}
+
+#signin-button:hover {
+  background-color: rgba(226, 46, 46, 0.785);
+  border: black 2px solid;
+  color: rgb(255, 249, 249);
+}
+
+/* Carousel */
+.carousel-image-container {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#carousel-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background-color: rgba(3, 24, 60, 0.807);
+}
+
+#card-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+  cursor: pointer;
+}
+
+.heart-icon-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.heart-icon-container:hover {
+
+  color: red
+}
+
+#nav-item:hover {
+  color: red !important;
+}
+
+
+.container-cat-link {
+  text-decoration: none;
+  color: black;
+}
+
+
+.container-cat-link:hover,
+.container-cat-link:active {
+  color: red !important;
+}
+
+.deleteIcon {
+  font-size: 30px;
+}
+
+.deleteIcon:hover {
+  color: red;
+}
+
+#single-img:hover {
+
+  cursor: pointer;
+}
+
+
+.heart-minus {
+  font-size: 30px;
+  color: red;
+}
+
+.heart-minus:hover {
+  color: black;
+}
+
+/* Brand Carousel */
+.brand-carousel {
+  height: 78px;
+  object-fit: cover;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 5px 10px;
+  z-index: 1;
+}
+
+.carousel-arrow-left {
+  left: 0;
+}
+
+.carousel-arrow-right {
+  right: 0;
+}
