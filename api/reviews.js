@@ -6,7 +6,9 @@ const {
     getProductReviews,
     createReview
 } = require('../db/reviews');
-const { requireUser, decodeSid } = require('../middleware/requireUser');
+// const { requireUser, decodeSid } = require('../middleware/requireUser');
+
+const { requireUser, decodeSid } = require('../../middleware/requireUser');
 
 
 // GET - /api/reviews - get all reviews for all products
