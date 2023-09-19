@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 });
 
 //add
-router.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
+router.get('/get-decoded-session-id', (req, res) => {
     console.log(req.session);
     res.send({
         decodedSessionId: req.decodedSid,

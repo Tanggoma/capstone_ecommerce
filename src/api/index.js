@@ -91,6 +91,8 @@ export async function getDecodedSessionId() {
             headers: headers
         });
 
+        console.log('Response headers:', response.headers);
+
         if (response.ok) {
             const data = await response.json();
 

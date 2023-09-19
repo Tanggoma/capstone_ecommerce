@@ -48,10 +48,12 @@ function decodeSid(req, res, next) {
     console.log('Raw SID:', rawSid);
 
     if (!rawSid) {
+        console.error('No rawSid cookie found.');
         return res.status(400).send('No session ID found.');
     }
 
     if (!rawSid.startsWith('s:')) {
+        console.error('Invalid session ID format.');
         return res.status(400).send('Invalid session ID format.');
     }
 
