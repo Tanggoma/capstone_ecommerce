@@ -12,7 +12,8 @@ const
     } = require('../db/products');
 
 // const { requireUser, decodeSid } = require('../middleware/requireUser');
-const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
+const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
+
 
 //checked**
 // GET - /api/products - get all products

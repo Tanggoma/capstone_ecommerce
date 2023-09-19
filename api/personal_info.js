@@ -9,7 +9,9 @@ const {
     updateUserPassword
 } = require('../db/personal_info');
 // const { requireUser } = require('../middleware/requireUser');
-const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
+
+const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
+
 
 // GET - /api/personal-info - Get all user personal info
 // router.get('/', async (req, res, next) => {

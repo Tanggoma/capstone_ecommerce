@@ -16,7 +16,8 @@ const {
 } = require('../db/carts'); // Import your cart functions
 
 // const { userOrGuest, requireUser, decodeSid } = require('../middleware/requireUser')
-const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
+const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
+
 
 
 //check**
