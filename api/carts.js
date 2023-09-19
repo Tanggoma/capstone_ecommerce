@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 
 const {
     getAllCarts,
@@ -13,10 +12,10 @@ const {
     deleteCart,
     deleteProductFromCart,
     clearCart
-} = require('../db/carts'); // Import your cart functions
+} = require('../db/carts'); // Import  cart functions
 
-// const { userOrGuest, requireUser, decodeSid } = require('../middleware/requireUser')
-const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
+const { userOrGuest, requireUser, decodeSid } = require('../middleware/requireUser')
+
 
 
 

@@ -10,12 +10,12 @@ const signature = require('cookie-signature');
 const path = require('path');
 
 // const { userOrGuest, decodeSid, requireUser } = require('../capstone_ecommerce/middleware/requireUser') FIRST ONE
-// const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUser')
-const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser')
+const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUser')
+// const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser')
 // const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'public'))); //add
+// app.use(express.static(path.join(__dirname, 'public'))); //add
 app.use(morgan('dev'));
 // app.use(cors());
 app.use(cors({

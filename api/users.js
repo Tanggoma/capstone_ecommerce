@@ -3,11 +3,10 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { createUser, getUser, getUserById, getUserByUsername, getAllUsers, updateUser } = require('../db/users');
 // const { requireUser } = require('./utils');
-// const { requireUser } = require('../middleware/requireUser');
+const { requireUser } = require('../middleware/requireUser');
 // const { decodeUser } = require('../middleware/requireUser');
 const { JWT_SECRET = 'neverTell' } = process.env;
 
-const { userOrGuest, decodeSid, requireUser } = require('../middleware/requireUser.js');
 
 
 

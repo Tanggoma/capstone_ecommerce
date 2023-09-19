@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 
 const
     {
@@ -11,8 +10,8 @@ const
         deleteProduct
     } = require('../db/products');
 
-// const { requireUser, decodeSid } = require('../middleware/requireUser');
-const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
+const { requireUser, decodeSid } = require('../middleware/requireUser');
+
 
 
 //checked**

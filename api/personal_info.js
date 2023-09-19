@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 
 const {
     getAllUserPersonalInfo,
@@ -8,9 +7,8 @@ const {
     updateUserPersonalInfo,
     updateUserPassword
 } = require('../db/personal_info');
-// const { requireUser } = require('../middleware/requireUser');
+const { requireUser } = require('../middleware/requireUser');
 
-const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
 
 
 // GET - /api/personal-info - Get all user personal info

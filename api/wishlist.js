@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
+
 
 const {
     getAllWishlistItems,
@@ -10,9 +10,8 @@ const {
     getWishlistItemByUserAndProduct
 } = require('../db/wishlist');
 
-// const { requireUser, decodeSid } = require('../middleware/requireUser');
+const { requireUser, decodeSid } = require('../middleware/requireUser');
 
-const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
 
 
 // GET - /api/wishlist - get all wishlist items
