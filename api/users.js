@@ -24,7 +24,8 @@ router.get('/', async (req, res, next) => {
 
 //add
 router.get('/get-decoded-session-id', (req, res) => {
-    console.log(req.session);
+    console.log('req.session', req.session);
+    console.log('Decoded SID:', req.decodedSid);
     res.send({
         decodedSessionId: req.decodedSid,
         decodedUser: req.user
