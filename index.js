@@ -9,18 +9,17 @@ const cookieParser = require('cookie-parser');
 const signature = require('cookie-signature');
 const path = require('path');
 
-// const { userOrGuest, decodeSid, requireUser } = require('../capstone_ecommerce/middleware/requireUser') FIRST ONE
+// const { userOrGuest, decodeSid, requireUser } = require('../capstone_ecommerce/middleware/requireUser') // For Local
 const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUser')
-// const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser')
-// const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
+
 
 // Middleware
-// app.use(express.static(path.join(__dirname, 'public'))); //add
-app.use(express.static(path.join(__dirname, 'dist'))); //add
+app.use(express.static(path.join(__dirname, 'dist'))); //add >> For Deployment 
 app.use(morgan('dev'));
 // app.use(cors());
 app.use(cors({
-    origin: 'http://localhost:5174', // frontend's address 
+    // origin: 'http://localhost:5174', // frontend's address LOCAL
+    origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address DEPLOY
     credentials: true, // to use cookies or authentication
     allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id', 'credentials']
 }));
@@ -43,6 +42,7 @@ app.use(session({
     }
 }));
 
+// for deployment
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
