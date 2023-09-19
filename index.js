@@ -65,13 +65,13 @@ app.use('/api/wishlist', wishlistRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/personal_info', personalInfoRouter);
 
-app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
-    console.log(req.session);
-    res.send({
-        decodedSessionId: req.decodedSid,
-        decodedUser: req.user
-    });
-});
+// app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
+//     console.log(req.session);
+//     res.send({
+//         decodedSessionId: req.decodedSid,
+//         decodedUser: req.user
+//     });
+// });
 
 
 // for deployment

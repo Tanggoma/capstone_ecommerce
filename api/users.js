@@ -21,6 +21,15 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+//add
+router.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
+    console.log(req.session);
+    res.send({
+        decodedSessionId: req.decodedSid,
+        decodedUser: req.user
+    });
+});
+
 // CHECKED**
 // GET /api/users/:id - Get user by ID  
 router.get('/:id', async (req, res, next) => {
