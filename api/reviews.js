@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 
 const {
     getAllProductReviews,
     getProductReviews,
     createReview
 } = require('../db/reviews');
-// const { requireUser, decodeSid } = require('../middleware/requireUser');
-const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
+const { requireUser, decodeSid } = require('../middleware/requireUser');
+
 
 // GET - /api/reviews - get all reviews for all products
 router.get('/', async (req, res, next) => {

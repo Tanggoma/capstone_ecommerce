@@ -6,8 +6,9 @@ const { createUser, getUser, getUserById, getUserByUsername, getAllUsers, update
 // const { requireUser } = require('../middleware/requireUser');
 // const { decodeUser } = require('../middleware/requireUser');
 const { JWT_SECRET = 'neverTell' } = process.env;
-const path = require('path');
-const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser.js');
+
+const { userOrGuest, decodeSid, requireUser } = require('../middleware/requireUser.js');
+
 
 
 // CHECKED**
