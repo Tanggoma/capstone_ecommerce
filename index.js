@@ -12,7 +12,7 @@ const path = require('path');
 // const { userOrGuest, decodeSid, requireUser } = require('../capstone_ecommerce/middleware/requireUser')
 // const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUser')
 // const { userOrGuest, decodeSid, requireUser } = require('/app/middleware/requireUser')
-const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'requireUser.js'));
+const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'public'))); //add
