@@ -70,8 +70,8 @@ export async function loginUser(credentials) {
 
 // SESSION ID
 export async function getDecodedSessionId() {
-    // const endpoint = '/get-decoded-session-id';
-    const endpoint = '/api/users/get-decoded-session-id';
+    const endpoint = '/get-decoded-session-id';
+    // const endpoint = '/api/users/get-decoded-session-id';
 
     // Retrieve the token from localStorage (or wherever it's stored)
     const token = localStorage.getItem('jwtToken');

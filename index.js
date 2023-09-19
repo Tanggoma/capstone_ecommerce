@@ -24,7 +24,6 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id', 'credentials']
 }));
 
-
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
@@ -42,9 +41,13 @@ app.use(session({
     }
 }));
 
-
-
-
+app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
+    console.log(req.session);
+    res.send({
+        decodedSessionId: req.decodedSid,
+        decodedUser: req.user
+    });
+});
 
 
 // Import and use routes
