@@ -33,7 +33,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: false,
+        secure: true, //was false
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
     }, // Set secure to true later for deploy using https. For local development, use false.
