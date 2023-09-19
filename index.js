@@ -16,6 +16,7 @@ const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUse
 
 // Middleware
 // app.use(express.static(path.join(__dirname, 'public'))); //add
+app.use(express.static('public'));
 app.use(morgan('dev'));
 // app.use(cors());
 app.use(cors({
