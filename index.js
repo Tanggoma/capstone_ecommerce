@@ -43,6 +43,9 @@ app.use(session({
     }
 }));
 
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 
 app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
     console.log(req.session);
