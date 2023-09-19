@@ -8,7 +8,8 @@ const { v4: uuidv4 } = require('uuid');
 const cookieParser = require('cookie-parser');
 const signature = require('cookie-signature');
 
-const { userOrGuest, decodeSid, requireUser } = require('../capstone_ecommerce/middleware/requireUser')
+// const { userOrGuest, decodeSid, requireUser } = require('../capstone_ecommerce/middleware/requireUser')
+const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUser')
 
 // Middleware
 app.use(morgan('dev'));
