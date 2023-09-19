@@ -30,7 +30,7 @@ app.use(session({
     cookie: {
         secure: false,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: false,
+        httpOnly: true,
     }, // Set secure to true later for deploy using https. For local development, use false.
     genid: (req) => {
         return uuidv4(); // Use UUIDs for session IDs
