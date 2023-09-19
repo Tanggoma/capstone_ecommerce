@@ -16,7 +16,7 @@ const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUse
 
 // Middleware
 // app.use(express.static(path.join(__dirname, 'public'))); //add
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'dist'))); //add
 app.use(morgan('dev'));
 // app.use(cors());
 app.use(cors({
@@ -43,8 +43,8 @@ app.use(session({
     }
 }));
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {

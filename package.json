@@ -10,7 +10,8 @@
     "seed": "node ./db/seed.js",
     "seed:dev": "nodemon ./db/seed.js",
     "start": "node index.js",
-    "start:dev": "nodemon index.js"
+    "start:dev": "nodemon index.js",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
