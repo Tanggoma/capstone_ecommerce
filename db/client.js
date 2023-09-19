@@ -8,8 +8,8 @@ const DB_URL = process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}
 // Define the options for the client
 const clientOptions = {
     connectionString: DB_URL,
-    // ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined
-    ssl: { rejectUnauthorized: false }
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined
+    // ssl: { rejectUnauthorized: false }
 };
 
 // Create a new client instance with the options
