@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+
 const {
     getAllWishlistItems,
     getWishlistItemsByUser,
@@ -8,7 +10,8 @@ const {
     getWishlistItemByUserAndProduct
 } = require('../db/wishlist');
 
-const { requireUser, decodeSid } = require('../middleware/requireUser');
+// const { requireUser, decodeSid } = require('../middleware/requireUser');
+const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
 
 // GET - /api/wishlist - get all wishlist items
 router.get('/', async (req, res, next) => {

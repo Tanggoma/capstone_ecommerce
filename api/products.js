@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 
 const
     {
@@ -10,7 +11,8 @@ const
         deleteProduct
     } = require('../db/products');
 
-const { requireUser, decodeSid } = require('../middleware/requireUser');
+// const { requireUser, decodeSid } = require('../middleware/requireUser');
+const { userOrGuest, decodeSid, requireUser } = require(path.join(__dirname, 'middleware', 'requireUser.js'));
 
 //checked**
 // GET - /api/products - get all products
