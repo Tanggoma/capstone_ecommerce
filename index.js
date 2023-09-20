@@ -34,7 +34,7 @@ app.set('trust proxy', 1); //for deploy
 app.use(session({
     secret: 'secret-key',
     resave: false,
-    saveUninitialized: false,     // Local: True , Deploy: false 
+    saveUninitialized: true,     // Local: True , Deploy: false 
     cookie: {
         secure: true, //false for local **
         maxAge: 7 * 24 * 60 * 60 * 1000,
