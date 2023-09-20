@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 
-// app.set('trust proxy', 1); for deploy
+app.set('trust proxy', 1); //for deploy
 
 app.use(session({
     secret: 'secret-key',
