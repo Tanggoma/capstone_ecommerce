@@ -47,7 +47,8 @@ app.use(session({
 }));
 
 app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
-    console.log(req.session);
+    console.log('req.session', req.session);
+    console.log('req.sessionID', req.sessionID);
     res.send({
         decodedSessionId: req.decodedSid,
         decodedUser: req.user
@@ -82,10 +83,7 @@ app.use('/api/personal_info', personalInfoRouter);
 // });
 
 
-// for deployment
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -97,6 +95,11 @@ app.use((err, req, res, next) => {
         res.status(500); // Internal Server Error for other unhandled errors
     }
     res.json({ error: { name: err.name, message: err.message } });
+});
+
+// for deployment
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 
