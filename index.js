@@ -12,15 +12,13 @@ const path = require('path');
 // const { userOrGuest, decodeSid, requireUser } = require('../capstone_ecommerce/middleware/requireUser') // For Local
 const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUser')
 
-
 // Middleware
 app.use(express.static(path.join(__dirname, 'dist'))); //add >> For Deployment 
 app.use(morgan('dev'));
-// app.use(cors());
 app.use(cors({
     // origin: 'http://localhost:5174', // frontend's address LOCAL ** 
     // origin: 'http://localhost:5173', // frontend's address LOCAL **
-    origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address DEPLOY
+    origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address PRODUCTION
     credentials: true, // to use cookies or authentication
     allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id', 'credentials']
 }));
@@ -29,17 +27,34 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 
-app.set('trust proxy', 1); //for deploy
+// FOR PRODUCTION
+app.set('trust proxy', 1); //for PRODUCTION
 
+// app.use(session({
+//     secret: 'secret-key',
+//     resave: false,
+//     saveUninitialized: true,     // ** use True for both local and dev
+//     cookie: {
+//         secure: true, //false for local **
+//         maxAge: 7 * 24 * 60 * 60 * 1000,
+//         sameSite: 'lax', //for deploy
+//         httpOnly: true,
+//     }, // Set secure to true later for deploy using https. For local development, use false. **
+//     genid: (req) => {
+//         return uuidv4(); // Use UUIDs for session IDs
+//     }
+// }));
+
+// FOR LOCAL 
 app.use(session({
     secret: 'secret-key',
     resave: false,
-    saveUninitialized: true,     // Local: True , Deploy: false 
+    saveUninitialized: true,     // ** use True for both local and dev
     cookie: {
-        secure: true, //false for local **
+        secure: false, //false for local **
         maxAge: 7 * 24 * 60 * 60 * 1000,
         sameSite: 'lax', //for deploy
-        httpOnly: true,
+        httpOnly: false,
     }, // Set secure to true later for deploy using https. For local development, use false. **
     genid: (req) => {
         return uuidv4(); // Use UUIDs for session IDs
@@ -65,7 +80,6 @@ const wishlistRouter = require('./api/wishlist');
 const reviewsRouter = require('./api/reviews');
 const personalInfoRouter = require('./api/personal_info')
 
-
 app.use('/api/users', usersRouter);
 app.use('/api/products', requireUser, decodeSid, productsRouter);
 app.use('/api/carts', requireUser, decodeSid, cartsRouter);
@@ -73,17 +87,6 @@ app.use('/api/categories', categoriesRouter);
 app.use('/api/wishlist', wishlistRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/personal_info', personalInfoRouter);
-
-// app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
-//     console.log(req.session);
-//     res.send({
-//         decodedSessionId: req.decodedSid,
-//         decodedUser: req.user
-//     });
-// });
-
-
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -97,7 +100,7 @@ app.use((err, req, res, next) => {
     res.json({ error: { name: err.name, message: err.message } });
 });
 
-// for deployment
+// for production
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
