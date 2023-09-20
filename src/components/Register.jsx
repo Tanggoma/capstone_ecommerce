@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { registerUser } from '../api/index'
 import AuthContext from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -30,6 +30,8 @@ const Register = () => {
         phone_number: phoneNumber
     };
 
+    const navigate = useNavigate();
+
     const { dispatch } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
@@ -45,11 +47,13 @@ const Register = () => {
                     user: result.user
                 })
             }
+
+            navigate('/login');
         }
         catch (error) {
 
             console.error('Registration failed.');
-            // Handle failure, like showing an error message to the user
+
         }
     }
 
