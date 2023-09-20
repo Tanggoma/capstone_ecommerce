@@ -1,8 +1,8 @@
-const BASE_URL = `http://localhost:3000`
+// const BASE_URL = `http://localhost:3000`
 
 // const BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000'; //For Deployment
 
-// const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
+const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
 
 // REGISTER 
 export async function registerUser(userData) {

@@ -18,9 +18,9 @@ app.use(express.static(path.join(__dirname, 'dist'))); //add >> For Deployment
 app.use(morgan('dev'));
 // app.use(cors());
 app.use(cors({
-    // origin: 'http://localhost:5174', // frontend's address LOCAL
-    origin: 'http://localhost:5173', // frontend's address LOCAL
-    // origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address DEPLOY
+    // origin: 'http://localhost:5174', // frontend's address LOCAL ** 
+    // origin: 'http://localhost:5173', // frontend's address LOCAL **
+    origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address DEPLOY
     credentials: true, // to use cookies or authentication
     allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id', 'credentials']
 }));
@@ -28,15 +28,19 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
+
+// app.set('trust proxy', 1); for deploy
+
 app.use(session({
     secret: 'secret-key',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,     // Local: True , Deploy: false 
     cookie: {
-        secure: true, //was false
+        secure: true, //false for local **
         maxAge: 7 * 24 * 60 * 60 * 1000,
+        sameSite: 'lax', //for deploy
         httpOnly: true,
-    }, // Set secure to true later for deploy using https. For local development, use false.
+    }, // Set secure to true later for deploy using https. For local development, use false. **
     genid: (req) => {
         return uuidv4(); // Use UUIDs for session IDs
     }

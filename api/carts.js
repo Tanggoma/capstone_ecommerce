@@ -157,6 +157,8 @@ router.post('/', requireUser, async (req, res) => {
     // const sessionId = req.cookies.sessionId || product.session_id || null;
     const sessionId = userId ? null : req.sessionID;
     console.log("sessionId from cart route post", sessionId)
+    console.log("Express sessionID:", req.sessionID); // added for dev
+
 
     try {
         await addToCart(userId, product.product_id, product.quantity, sessionId);
