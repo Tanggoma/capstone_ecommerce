@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button, Card, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 
 import { CartContext } from '../context/CartContext';
-import { getProductDetail } from '../api';
+import { getProductDetail, postOrderHistory } from '../api';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const CheckOut = () => {
@@ -59,6 +59,8 @@ const CheckOut = () => {
 
     //convert to array 
     const groupedCartArray = Object.values(groupedCartItems);
+    console.log('groupedCartArray', groupedCartArray)
+    console.log('cart', cart)
 
     useEffect(() => {
         async function fetchProductDetails() {
@@ -103,7 +105,9 @@ const CheckOut = () => {
 
         console.log('clicked')
         try {
+            await postOrderHistory(groupedCartArray, products)
             await clearCart();
+
             navigate('/payment');
         } catch (error) {
             console.error('Error clearing cart:', error);

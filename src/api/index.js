@@ -751,3 +751,86 @@ export async function updatePassword(currentPassword, newPassword) {
     }
 
 }
+
+// Get Order History
+export async function getOrderHistory() {
+
+    const endpoint = '/api/orders'
+    const token = localStorage.getItem('authToken');
+
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+
+    try {
+        const response = await fetch(BASE_URL + endpoint, {
+            method: 'GET',
+            headers: headers,
+            credentials: 'include',
+        })
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.log('Failed to get orders history', errorData.error)
+            throw new Error(errorData.error);
+        }
+
+        const responseData = await response.json();
+        return responseData
+
+    } catch (error) {
+        console.error('Error getting order history, error')
+    }
+
+}
+
+
+// Post Order History
+export async function postOrderHistory(cartItems, products) {
+    const endpoint = '/api/orders/history'
+    const token = localStorage.getItem('authToken');
+
+    console.log('cartItems', cartItems)
+
+    const itemsForOrder = cartItems.map(item => {
+        const product = products.find(prod => prod.id === item.product_id);
+        return {
+            id: item.product_id,
+            quantity: item.quantity || item.cart_quantity,
+            price: product ? parseFloat(product.price) : 0
+        };
+    });
+
+    const totalAmount = itemsForOrder.reduce((acc, item) => acc + (parseFloat(item.price) * item.quantity), 0);
+
+    console.log('itemForOrders', itemsForOrder)
+
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+
+    try {
+        const response = await fetch(BASE_URL + endpoint, {
+            method: 'POST',
+            headers: headers,
+            credentials: 'include',
+            body: JSON.stringify({ itemForOrders: itemsForOrder, totalAmount: totalAmount })
+        })
+
+        console.log('response', response)
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.log('Failed to post orders history', errorData.error)
+            throw new Error(errorData.error);
+        }
+
+        const responseData = await response.json();
+        return responseData
+
+    } catch (error) {
+        console.error('Error posting order history, error')
+    }
+}

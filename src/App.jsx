@@ -27,6 +27,7 @@ import CheckOut from './components/CheckOut';
 import Payment from './components/Payment';
 import Wishlist from './components/Wishlist';
 import ProductByBrand from './components/ProductByBrand';
+import OrdersHistory from './components/OrdersHistory';
 // import AddToCart from './components/AddToCart'; // Add to Cart 
 
 
@@ -67,6 +68,7 @@ function App() {
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/order-history" element={<OrdersHistory />} />
 
       </Routes>
     </Router>

@@ -94,6 +94,10 @@ function NavigationBar() {
         navigate('/profile');
     }
 
+    const handleOrderHistory = () => {
+        navigate('/order-history');
+    }
+
     return (
         <div className='text-white'>
 
@@ -228,6 +232,20 @@ function NavigationBar() {
                             onClick={handleMyprofile}>
 
                             My Profile </Button>
+                        <Button
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                padding: 0,
+                                marginBottom: 20,
+                                fontSize: 'inherit',
+                                color: 'inherit',
+                                cursor: 'pointer',
+                                outline: 'none'
+                            }}
+                            onClick={handleOrderHistory}>
+
+                            My Order History </Button>
                         <Button
                             onClick={handleLogout}
                             style={{

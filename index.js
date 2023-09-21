@@ -16,9 +16,8 @@ const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUse
 app.use(express.static(path.join(__dirname, 'dist'))); //add >> For Deployment 
 app.use(morgan('dev'));
 app.use(cors({
-    // origin: 'http://localhost:5174', // frontend's address LOCAL ** 
-    // origin: 'http://localhost:5173', // frontend's address LOCAL **
-    origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address PRODUCTION
+    origin: 'http://localhost:5175', // frontend's address LOCAL **
+    // origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address PRODUCTION
     credentials: true, // to use cookies or authentication
     allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id', 'credentials']
 }));
@@ -79,6 +78,7 @@ const categoriesRouter = require('./api/categories');
 const wishlistRouter = require('./api/wishlist');
 const reviewsRouter = require('./api/reviews');
 const personalInfoRouter = require('./api/personal_info')
+const ordersRouter = require('./api/orders');
 
 app.use('/api/users', usersRouter);
 app.use('/api/products', requireUser, decodeSid, productsRouter);
@@ -87,6 +87,7 @@ app.use('/api/categories', categoriesRouter);
 app.use('/api/wishlist', wishlistRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/personal_info', personalInfoRouter);
+app.use('/api/orders', ordersRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
