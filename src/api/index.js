@@ -6,7 +6,7 @@ const BASE_URL = `http://localhost:3000`
 
 // REGISTER 
 export async function registerUser(userData) {
-    // const endpoint = 'users/register';
+
     const endpoint = '/api/users/register';
 
     try {
@@ -44,7 +44,6 @@ export async function registerUser(userData) {
 // LOGIN
 export async function loginUser(credentials) {
 
-    // const endpoint = 'users/login';
     const endpoint = '/api/users/login';
 
     try {
@@ -72,7 +71,6 @@ export async function loginUser(credentials) {
 // SESSION ID
 export async function getDecodedSessionId() {
     const endpoint = '/get-decoded-session-id';
-    // const endpoint = '/api/users/get-decoded-session-id';
 
     // Retrieve the token from localStorage (or wherever it's stored)
     const token = localStorage.getItem('jwtToken');
@@ -193,7 +191,7 @@ export async function getProductDetail(id, token) {
         const response = await fetch(BASE_URL + endpoint, {
             method: 'GET',
             headers: headers,
-            credentials: 'include' // Ensures cookies (like session IDs) are sent with the request
+            credentials: 'include'
         });
 
         if (!response.ok) {
@@ -201,7 +199,7 @@ export async function getProductDetail(id, token) {
         }
 
         const detail = await response.json();
-        // console.log(detail);
+
         return detail;
 
     } catch (error) {
@@ -273,8 +271,6 @@ export async function fetchUserCart(token) {
 
     const endpoint = '/api/carts/mycart'
 
-    console.log('token my cart', token)
-
     if (!token) {
         throw new Error("No authentication token provided");
     }
@@ -295,7 +291,7 @@ export async function fetchUserCart(token) {
         }
 
         const cartData = await response.json();
-        console.log(cartData)
+
         return cartData;
     } catch (error) {
         console.error("Error fetching user cart:", error);
@@ -355,7 +351,6 @@ export async function addProductToCart(productId, quantity, userId, sessionId, t
         headers['Authorization'] = 'Bearer ' + token;
     }
 
-    console.log('headers', headers)
 
     try {
         const response = await fetch(BASE_URL + endpoint, {
@@ -400,8 +395,6 @@ export async function updateCartQty(userId, productId, newQuantity, sessionId, t
         headers['Authorization'] = 'Bearer ' + token;
     }
 
-    console.log('headers', headers)
-
     try {
         const response = await fetch(BASE_URL + endpoint, {
             method: 'PUT',
@@ -430,10 +423,10 @@ export async function deleteProductFromCart(userId, productId, sessionId, token)
 
     let endpoint = `/api/carts/delete?productId=${productId}`;
 
-    console.log('userId', userId);
-    console.log('sessionId', sessionId);
-    console.log('token', token)
-    console.log(localStorage.getItem('authToken'));
+    // console.log('userId', userId);
+    // console.log('sessionId', sessionId);
+    // console.log('token', token)
+    // console.log(localStorage.getItem('authToken'));
 
 
     if (userId) {
@@ -452,9 +445,6 @@ export async function deleteProductFromCart(userId, productId, sessionId, token)
     if (token) {
         headers['Authorization'] = 'Bearer ' + token;
     }
-
-
-    console.log('Headers', headers)
 
     try {
         const response = await fetch(BASE_URL + endpoint, {
@@ -531,8 +521,6 @@ export async function postReview(productId, rating, reviewText) {
 
     const token = localStorage.getItem('authToken');
 
-    // console.log(token)
-
     if (token) {
         headers['Authorization'] = 'Bearer ' + token;
     }
@@ -582,8 +570,6 @@ export async function getWishListByUser() {
 
     const token = localStorage.getItem('authToken');
 
-    console.log(token)
-
     if (token) {
         headers['Authorization'] = 'Bearer ' + token;
     }
@@ -626,8 +612,6 @@ export async function addProductToWishList(productId) {
 
 
     const token = localStorage.getItem('authToken');
-
-    // console.log(token)
 
     if (token) {
         headers['Authorization'] = 'Bearer ' + token;
@@ -838,7 +822,7 @@ export async function postOrderHistory(cartItems, products) {
     const endpoint = '/api/orders/history'
     const token = localStorage.getItem('authToken');
 
-    console.log('cartItems', cartItems)
+    // console.log('cartItems', cartItems)
 
     const itemsForOrder = cartItems.map(item => {
         const product = products.find(prod => prod.id === item.product_id);
@@ -851,7 +835,7 @@ export async function postOrderHistory(cartItems, products) {
 
     const totalAmount = itemsForOrder.reduce((acc, item) => acc + (parseFloat(item.price) * item.quantity), 0);
 
-    console.log('itemForOrders', itemsForOrder)
+    // console.log('itemForOrders', itemsForOrder)
 
     let headers = {
         'Content-Type': 'application/json',
@@ -865,8 +849,6 @@ export async function postOrderHistory(cartItems, products) {
             credentials: 'include',
             body: JSON.stringify({ itemForOrders: itemsForOrder, totalAmount: totalAmount })
         })
-
-        console.log('response', response)
 
         if (!response.ok) {
             const errorData = await response.json();
