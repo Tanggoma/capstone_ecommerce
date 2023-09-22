@@ -39,7 +39,8 @@ async function getAllOrderHistory(userId) {
             ordersMap[row.order_id].items.push({
                 product_id: row.product_id,
                 quantity: row.quantity,
-                price: row.price
+                price: row.price,
+                order_date: row.order_date
             });
         }
         return Object.values(ordersMap);

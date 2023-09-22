@@ -21,7 +21,9 @@ const OrdersHistory = () => {
             try {
                 const orderData = await getOrderHistory()
                 console.log(orderData);
-                setOrders(orderData)
+                const orderItems = orderData[0].items
+                console.log(orderItems)
+                setOrders(orderItems)
 
                 const fetchedProducts = await getAllProducts(token)
                 setProducts(fetchedProducts);
@@ -37,49 +39,55 @@ const OrdersHistory = () => {
 
     }, [])
 
-    const getProductDetails = (productId) => {
 
-        return products.find(product => product.id === productId)
+    const groupByOrderDate = (orderItems) => {
+        return orderItems.reduce((acc, item) => {
 
-    }
+            if (!acc[item.order_date]) {
+                acc[item.order_date] = [];
+            }
+            acc[item.order_date].push(item);
+            return acc;
+        }, {});
+    };
+
+    const groupedOrders = groupByOrderDate(orders);
 
     return (
+
         <>
             <h4 className='text-center text-secondary my-5 bg-light p-3'>Orders History</h4>
-            {orders && orders.map((order, idx) => (
-                <Card key={idx} className="mt-3">
-                    <h4 className='mx-4 my-4 text-primary'>Purchase Date: {new Date(order.order_date).toISOString().split('T')[0]}</h4>
 
+            {Object.entries(groupedOrders).map(([date, items]) => (
+                <Card key={date} className="mt-3">
+                    <h4 className='mx-4 my-4 text-primary'>Purchase Date: {new Date(date).toISOString().split('T')[0]}</h4>
                     <Card.Body>
-                        {order.items.map((item, itemIdx) => (
-                            <React.Fragment key={itemIdx}>
-                                {products.filter(product => product.id === item.product_id)
-                                    .map((product, prodIdx) => (
-                                        <Container key={prodIdx}>
-                                            <Card className='my-2'>
-                                                <Card.Body>
-                                                    <Row className='d-flex justify-content-md-betweens'>
-                                                        <Col xs={6} md={4} className='d-flex justify-content-center flex-column'>
-                                                            <Image src={product.image_url} thumbnail style={{ width: '150px', height: 'auto' }}></Image>
-                                                        </Col>
-                                                        <Col xs={6} md={4} className='d-flex justify-content-center flex-column'>
-                                                            <h5>{product.title || item.product_id}</h5>
-                                                            <p>Qty: {item.quantity}</p>
-                                                        </Col>
-                                                        <Col xs={6} md={4} className='d-flex justify-content-center flex-column'>
-                                                            <p className='mx-5'>${parseFloat(item.price * item.quantity).toFixed(2)} </p>
-                                                        </Col>
-                                                    </Row>
-                                                </Card.Body>
-                                            </Card>
-
-                                        </Container>
-                                    ))}
-                            </React.Fragment>
-                        ))}
-                        <hr />
-                        <h5 className='text-end font-weight-bold text-danger'>Total Amount: ${order.total_amount}</h5>
-
+                        {items.map((item, idx) => {
+                            const product = products.find(prod => prod.id === item.product_id);
+                            if (product) {
+                                return (
+                                    <Container key={idx}>
+                                        <Card className='my-2'>
+                                            <Card.Body>
+                                                <Row className='d-flex justify-content-between'>
+                                                    <Col xs={6} md={4}>
+                                                        <Image src={product.image_url} thumbnail style={{ width: '150px', height: 'auto' }} />
+                                                    </Col>
+                                                    <Col xs={6} md={4}>
+                                                        <h5>{product.title}</h5>
+                                                        <p>Qty: {item.quantity}</p>
+                                                    </Col>
+                                                    <Col xs={6} md={4}>
+                                                        <p className='mx-5'>${parseFloat(item.price * item.quantity).toFixed(2)}</p>
+                                                    </Col>
+                                                </Row>
+                                            </Card.Body>
+                                        </Card>
+                                    </Container>
+                                );
+                            }
+                            return null;
+                        })}
                     </Card.Body>
                 </Card>
             ))}
