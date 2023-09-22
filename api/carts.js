@@ -75,66 +75,8 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
-
-
-//check**
-
-// Version3
-// router.get('/session', async (req, res, next) => {
-//     try {
-
-//         const sessionId = req.sessionID
-//         console.log(sessionId)
-//         res.json({ sessionId: sessionId });
-//     } catch (error) {
-
-//         next(error);
-//     }
-// });
-
-
-
-
-
-// version 1
-// router.get('/session/:sessionId', async (req, res, next) => {
-//     try {
-//         const sessionId = req.params.sessionId;
-
-
-
-//         const cartItems = await getAllCartItemsForSession(sessionId);
-//         res.json(cartItems);
-//     } catch (error) {
-
-//         next(error);
-//     }
-// });
-
-
-
 // POST -  - Add a new cart
 
-//checked**
-// router.post('/', requireUser, async (req, res) => {
-//     const { product_id, quantity } = req.body;
-
-//     // If the user is authenticated, use their userId, otherwise treat as a guest (null userId).
-//     const userId = req.user ? req.user.id : null;
-
-//     try {
-//         const cartItem = await addToCart(userId, product_id, quantity);
-//         res.status(200).send({
-//             message: 'Product added to cart successfully!',
-//             updatedCartItem: cartItem
-//         });
-//     } catch (error) {
-//         res.status(500).send({ error: 'Failed to add product to cart', details: error.message });
-//     }
-// });
-
-
-// check**
 router.post('/', requireUser, async (req, res) => {
     const product = req.body;
 
@@ -223,22 +165,25 @@ router.post('/', requireUser, async (req, res) => {
 
 //checked**
 // update cart 
-router.put('/update', async (req, res, next) => {
-    const { userId, productId, newProductId, newQuantity, sessionId } = req.body;
+router.put('/update', requireUser, async (req, res, next) => {
+    const { productId, newQuantity } = req.body;
+
+    const userId = req.user?.id
+    const sessionId = userId ? null : req.sessionID;
 
     // Validate the data before updating
     if (!userId && !sessionId) {
         return res.status(400).json({ error: 'You must provide either userId or sessionId.' });
     }
-    if (!productId || !newProductId || typeof newQuantity === 'undefined') {
-        return res.status(400).json({ error: 'You must provide productId, newProductId, and newQuantity.' });
+    if (!productId || typeof newQuantity === 'undefined') {
+        return res.status(400).json({ error: 'You must provide productId and newQuantity.' });
     }
 
     try {
-        const updatedCart = await updateCart(userId, productId, newProductId, newQuantity, sessionId);
+        const updatedCart = await updateCart(userId, productId, newQuantity, sessionId);
 
         if (!updatedCart) {
-            return res.status(404).json({ error: 'Cart not found for the provided user/session and product.' });
+            return res.status(404).json({ error: 'You did not provide a valid cart item.' });
         }
 
         return res.json(updatedCart);
@@ -246,8 +191,6 @@ router.put('/update', async (req, res, next) => {
         next(error);
     }
 });
-
-
 
 
 // DELETE - /api/carts/:id - Delete a cart

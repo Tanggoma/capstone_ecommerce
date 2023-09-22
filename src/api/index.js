@@ -378,6 +378,53 @@ export async function addProductToCart(productId, quantity, userId, sessionId, t
     }
 }
 
+// Update item in cart
+
+export async function updateCartQty(userId, productId, newQuantity, sessionId, token) {
+    const endpoint = '/api/carts/update';
+
+    const body = {
+        productId: productId,
+        newQuantity: newQuantity,
+        ...(userId ? { user_id: userId } : { session_id: sessionId })
+    };
+
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+
+    if (!token) {
+        token = localStorage.getItem('authToken');
+    }
+    if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+    }
+
+    console.log('headers', headers)
+
+    try {
+        const response = await fetch(BASE_URL + endpoint, {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(body),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const responseData = await response.json();
+            const errorMessage = responseData.message || 'Failed to update product to cart.';
+            throw new Error(errorMessage);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error adding product to cart:', error);
+        throw error;
+    }
+}
+
+
+
 // Delete item in cart
 export async function deleteProductFromCart(userId, productId, sessionId, token) {
 

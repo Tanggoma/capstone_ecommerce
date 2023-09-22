@@ -67,7 +67,7 @@ const OrdersHistory = () => {
                                                             <p>Qty: {item.quantity}</p>
                                                         </Col>
                                                         <Col xs={6} md={4} className='d-flex justify-content-center flex-column'>
-                                                            <p className='mx-5'>${item.price}</p>
+                                                            <p className='mx-5'>${parseFloat(item.price * item.quantity).toFixed(2)} </p>
                                                         </Col>
                                                     </Row>
                                                 </Card.Body>

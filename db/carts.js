@@ -1,13 +1,4 @@
 const client = require('./client');
-// const util = require('util');
-
-
-
-// get user cart
-// Add new cart
-// Update a cart
-// Delete a cart
-
 
 // Get all carts
 async function getAllCarts() {
@@ -94,25 +85,6 @@ async function getUserCartsWithProductDetails(userId) {
 }
 
 // Add a new cart
-// async function addCart(userId, productId, quantity) {
-//     try {
-//         await client.query(`
-//             INSERT INTO carts (user_id, product_id, quantity, created_at)
-//             VALUES ($1, $2, $3, CURRENT_TIMESTAMP);
-//         `, [userId, productId, quantity]);
-
-//         const { rows: [newCart] } = await client.query(`
-//             SELECT * FROM carts
-//             WHERE user_id = $1 AND product_id = $2;
-//         `, [userId, productId]);
-
-//         return newCart;
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
-
 async function addToCart(userId, productId, quantity, sessionId) {
     try {
         const { rows } = await client.query(`
@@ -125,44 +97,6 @@ async function addToCart(userId, productId, quantity, sessionId) {
         throw error;
     }
 }
-
-
-
-// Add to cart function 
-// async function addToCart(userId, productId, quantity, sessionId) {
-//     try {
-//         // First, check if the product already exists in the cart for the user or guest
-//         const { rows: existingProduct } = await client.query(`
-//             SELECT * FROM carts 
-//             WHERE (user_id = $1 OR session_id = $2) AND product_id = $3;
-//         `, [userId, sessionId, productId]);
-
-//         if (existingProduct.length > 0) {
-//             // If the product exists, update the quantity
-//             const newQuantity = existingProduct[0].quantity + quantity;
-//             const { rows: updatedProduct } = await client.query(`
-//                 UPDATE carts
-//                 SET quantity = $1
-//                 WHERE id = $2
-//                 RETURNING *;
-//             `, [newQuantity, existingProduct[0].id]);
-//             return updatedProduct[0];
-//         } else {
-//             // If the product doesn't exist in the cart, insert a new row
-//             const { rows: newProduct } = await client.query(`
-//                 INSERT INTO carts (user_id, product_id, quantity, created_at, session_id)
-//                 VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4)
-//                 RETURNING *;
-//             `, [userId, productId, quantity, sessionId]);
-//             return newProduct[0];
-//         }
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
-
-
 
 // Update a cart
 // async function updateCart(userId, productId, newProductId, newQuantity) {
@@ -185,20 +119,20 @@ async function addToCart(userId, productId, quantity, sessionId) {
 // }
 
 //checked**
-async function updateCart(userId, productId, newProductId, newQuantity, sessionId) {
+async function updateCart(userId, productId, newQuantity, sessionId) {
     try {
         if (userId) {
             await client.query(`
                 UPDATE carts
-                SET product_id = $3, quantity = $4
+                SET quantity = $3
                 WHERE user_id = $1 AND product_id = $2;
-            `, [userId, productId, newProductId, newQuantity]);
+            `, [userId, productId, newQuantity]);
         } else if (sessionId) {
             await client.query(`
                 UPDATE carts
-                SET product_id = $3, quantity = $4
+                SET quantity = $3
                 WHERE session_id = $1 AND product_id = $2;
-            `, [sessionId, productId, newProductId, newQuantity]);
+            `, [sessionId, productId, newQuantity]);
         } else {
             throw new Error("Both userId and sessionId cannot be absent.");
         }
@@ -209,17 +143,13 @@ async function updateCart(userId, productId, newProductId, newQuantity, sessionI
         const { rows: [updatedCart] } = await client.query(`
             SELECT * FROM carts
             WHERE ${criteria} AND product_id = $2;
-        `, [value, newProductId]);
+        `, [value, productId]);
 
         return updatedCart;
     } catch (error) {
         throw error;
     }
 }
-
-
-
-
 
 
 // Delete a cart
@@ -236,7 +166,7 @@ async function deleteCart(cartId) {
     }
 }
 
-// delete product from cart 
+// Delete product from cart 
 
 async function deleteProductFromCart(userId, productId, sessionId) {
     try {
@@ -264,7 +194,7 @@ async function deleteProductFromCart(userId, productId, sessionId) {
     }
 }
 
-// FUNCTION to clear cart after payment 
+// Clear cart after payment 
 async function clearCart(userId, sessionId) {
     try {
         if (userId) {
@@ -281,8 +211,6 @@ async function clearCart(userId, sessionId) {
         return { success: false, message: error.message };
     }
 }
-
-
 
 
 module.exports = {

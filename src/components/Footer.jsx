@@ -29,17 +29,17 @@ const Footer = () => {
                     <Col md={3}>
                         <h5 className='mt-3 text-danger'>About project</h5>
                         <ul className="list-unstyled">
-                            <li>Read Me</li>
-                            <li>Database ERD</li>
-                            <li>Github</li>
+                            <li className='text-warning'>Read Me</li>
+                            <li className='text-warning'>Database ERD</li>
+                            <li className='text-warning'>Github</li>
                         </ul>
                     </Col>
                     <Col md={3}>
                         <h5 className='mt-3 text-danger'>About me</h5>
                         <ul className="list-unstyled">
                             {/* <li>My Resume</li> */}
-                            <li>Other Projects</li>
-                            <li>LinkedIn</li>
+                            <li className='text-warning'>Other Projects</li>
+                            <li className='text-warning'>LinkedIn</li>
                         </ul>
                     </Col>
                 </Row>

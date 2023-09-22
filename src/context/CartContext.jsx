@@ -1,6 +1,6 @@
 // CartContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { addProductToCart, fetchUserCart, fetchCartBySession, deleteProductFromCart, getDecodedSessionId, clearCartAfterPayment } from '../api';
+import { addProductToCart, fetchUserCart, fetchCartBySession, deleteProductFromCart, getDecodedSessionId, clearCartAfterPayment, updateCartQty } from '../api';
 import AuthContext from './AuthContext';
 
 
@@ -126,9 +126,33 @@ export const CartProvider = ({ children }) => {
         }
     }
 
+    //Update Cart Quantity
+    async function handleUpdateCart(productId, newQuantity) {
+
+        const userId = state?.user?.id;
+        const token = state?.token;
+        const sessionId = await getDecodedSessionId();
+
+        try {
+            await updateCartQty(userId, productId, newQuantity, sessionId, token);
+
+            const updatedCart = cart.map(item => {
+                if (item.product_id === productId) {
+                    return { ...item, quantity: newQuantity }
+                }
+                return item;
+            });
+
+            setCart(updatedCart);
+        }
+
+        catch (error) {
+            console.error('Error updating quantity in cart:', error);
+        }
+    }
 
     return (
-        <CartContext.Provider value={{ cart, setCart, handleAddToCart, handleDeleteFromCart, clearCart }}>
+        <CartContext.Provider value={{ cart, setCart, handleAddToCart, handleDeleteFromCart, clearCart, handleUpdateCart }}>
             {children}
         </CartContext.Provider>
     );

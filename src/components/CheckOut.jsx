@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Card, Stack } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Stack, Image } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 
 import { CartContext } from '../context/CartContext';
@@ -9,12 +10,18 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 const CheckOut = () => {
 
     //Context
-    const { cart, handleDeleteFromCart, clearCart } = useContext(CartContext);
+    const { cart, handleDeleteFromCart, clearCart, handleUpdateCart } = useContext(CartContext);
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
     const [totalAmount, setTotalAmount] = useState(0);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [quantityOverLimit, setQuantityOverLimit] = useState(false);
 
 
+    // Modal to edit cart quantity
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     //Calculate Total 
 
@@ -103,7 +110,7 @@ const CheckOut = () => {
 
     const handlePayment = async () => {
 
-        console.log('clicked')
+        // console.log('clicked')
         try {
             await postOrderHistory(groupedCartArray, products)
             await clearCart();
@@ -112,6 +119,57 @@ const CheckOut = () => {
         } catch (error) {
             console.error('Error clearing cart:', error);
 
+        }
+    }
+
+    const handleDecrement = () => {
+
+        if (selectedProduct && (selectedProduct.quantity || selectedProduct.cart_quantity) <= 10) {
+            setQuantityOverLimit(false)
+        }
+
+        if (selectedProduct && (selectedProduct.quantity || selectedProduct.cart_quantity) > 1) {
+            setSelectedProduct(prevState => {
+                return {
+                    ...prevState,
+                    quantity: (prevState.quantity - 1 || prevState.cart_quantity - 1)
+                }
+            })
+        }
+
+    }
+
+    const handleIncrement = () => {
+
+        if (selectedProduct && (selectedProduct.quantity || selectedProduct.cart_quantity) === 10) {
+            setQuantityOverLimit(true)
+        } else {
+            setQuantityOverLimit(false)
+        }
+
+        if (selectedProduct && (selectedProduct.quantity || selectedProduct.cart_quantity) < 10) {
+            setSelectedProduct(prevState => {
+                return {
+                    ...prevState,
+                    quantity: (prevState.quantity + 1 || prevState.cart_quantity + 1)
+                }
+            })
+        }
+    }
+
+    const handleUpdate = () => {
+
+        console.log('update')
+
+        console.log('selectProduct', selectedProduct)
+
+        console.log('Product ID', selectedProduct.product_id)
+
+        console.log('Quantity', selectedProduct.quantity)
+
+        if (selectedProduct) {
+            handleUpdateCart(selectedProduct.product_id, selectedProduct.quantity);
+            handleClose();
         }
     }
 
@@ -186,6 +244,71 @@ const CheckOut = () => {
 
                                             ${product.price * (cartItem.quantity || cartItem.cart_quantity)}
                                         </div>
+                                        <Button variant='light' onClick={() => { handleShow(); setSelectedProduct(cartItem); }}> Edit </Button>
+
+                                        {/* Modal */}
+                                        <Modal
+                                            show={show}
+                                            onHide={() => { handleClose(); setSelectedProduct(null); }}
+                                            backdrop="static"
+                                            keyboard={false}
+                                            size="lg"
+                                            aria-labelledby="contained-modal-title-vcenter"
+                                            centered
+                                        >
+                                            <Modal.Header closeButton className="bg-light">
+                                                {/* <Modal.Title className="font-weight-bold text-secondary text-center">Update Quantity</Modal.Title> */}
+                                                <Modal.Title className="font-weight-bold mb-2">
+                                                    {selectedProduct ? products.find(p => p.id === selectedProduct.product_id).title : ''}
+                                                </Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <Container className='text-center'>
+                                                    <Row className="mb-3 justify-content-center">
+                                                        <Col md={12}>
+                                                            <Image
+                                                                src={selectedProduct ? products.find(p => p.id === selectedProduct.product_id).image_url : ''}
+                                                                style={{ width: '300px', height: '300px' }}
+                                                                fluid
+                                                            />
+                                                        </Col>
+                                                    </Row>
+                                                </Container>
+
+                                                <Row className="align-items-center my-5">
+                                                    <Col md={5} className="text-center">
+                                                        <div> Quantity: </div>
+                                                    </Col>
+                                                    <Col md={1} className="text-center">
+                                                        <Button onClick={() => handleDecrement()}> -</Button>
+                                                    </Col>
+                                                    <Col md={1}>
+                                                        <div className="text-center font-weight-bold">
+                                                            {selectedProduct ? (selectedProduct.quantity || selectedProduct.cart_quantity) : ''}
+                                                        </div>
+                                                    </Col>
+                                                    <Col md={1} className="text-center">
+                                                        <Button onClick={() => handleIncrement()}> + </Button>
+                                                    </Col>
+                                                </Row>
+
+                                                <Row>
+                                                    {quantityOverLimit ? <p className='text-danger text-center'> * Quantity over Limit * </p> : null}
+                                                </Row>
+
+                                            </Modal.Body>
+
+                                            <Modal.Footer>
+                                                <Button
+                                                    variant="danger"
+                                                    onClick={handleUpdate}>Update</Button>
+                                                <Button variant="primary" onClick={handleClose}>
+                                                    Close
+                                                </Button>
+
+                                            </Modal.Footer>
+                                        </Modal>
+
                                         <RiDeleteBin6Line
                                             onClick={() => removeItemFromCart(product.id)}
                                             className='deleteIcon'
