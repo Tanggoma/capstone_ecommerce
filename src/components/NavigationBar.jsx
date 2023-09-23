@@ -1,26 +1,29 @@
+// Import React Bootstrap and icons
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Offcanvas } from 'react-bootstrap';
 import { VscAccount } from 'react-icons/vsc'
 import { FiHeart } from 'react-icons/fi'
-import { useState } from 'react';
 import { BiSearch } from 'react-icons/bi'
 import { BsCart } from 'react-icons/bs'
-import { useEffect, useContext } from 'react';
-import AuthContext from '../context/AuthContext';
-import { Offcanvas } from 'react-bootstrap';
+import { useState, useEffect, useContext } from 'react';
+
+// Import Router 
 import { Link } from 'react-router-dom';
-// import { SearchContext } from '../context/SearchContext2';
-import { SearchContext } from '../context/SearchContext';
 import { useNavigate } from 'react-router-dom';
 
+// Import API 
 import { getCategories } from '../api';
 
-//import cart context
+//import context
 import { useCart } from '../context/CartContext';
+import { SearchContext } from '../context/SearchContext';
+import AuthContext from '../context/AuthContext';
 
+// Import Child Component
 import CartOffCanvas from './CartOffCanvas';
 
 function NavigationBar() {
@@ -29,7 +32,6 @@ function NavigationBar() {
     const [categories, setCategories] = useState([]);
     const [isAccountCanvasVisible, setIsAccountCanvasVisible] = useState(false);
     const [isCartVisible, setIsCartVisible] = useState(false);
-    // const [searchTerm, setSearchTerm] = useState([])
 
     //cart context
     const { cart } = useCart();
@@ -56,16 +58,9 @@ function NavigationBar() {
         const getAllcategories = async () => {
 
             try {
-                // const response = await fetch('http://localhost:3000/api/categories')
                 const categories = await getCategories();
-                // console.log(response);
-
-                // const categories = await response
-
                 setCategories(categories);
 
-                // console.log(categories);
-                // /api/category
             } catch (error) {
                 console.log(error)
             }
@@ -73,8 +68,6 @@ function NavigationBar() {
 
         getAllcategories();
     }, []);
-
-    console.log('state.user', state.user)
 
     const handleShowAccountCanvas = () => {
         setIsAccountCanvasVisible(true);
@@ -113,7 +106,6 @@ function NavigationBar() {
                 <Container fluid style={{ display: 'flex', justifyContent: 'space-between' }}>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        {/* <Nav.Link id='nav-item' href="/login"><VscAccount style={{ width: "2rem", height: "2rem" }} /> My Account  </Nav.Link> */}
 
                         {
                             state.user ? (
@@ -203,7 +195,7 @@ function NavigationBar() {
 
                 <Nav style={{ display: 'flex', justifyContent: 'center' }}
                     activeKey="/home"
-                // onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
+
                 >
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         {categories.map(category => (
@@ -224,7 +216,7 @@ function NavigationBar() {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Nav className="flex-column align-items-start">
-                        {/* <Link to="/account">My account</Link> */}
+
                         <Button
                             style={{
                                 background: 'none',
@@ -266,7 +258,7 @@ function NavigationBar() {
                                 outline: 'none'
                             }}
                         > Logout</Button>
-                        {/* <Link to="/profile">Log out</Link> */}
+
                     </Nav>
                 </Offcanvas.Body>
             </Offcanvas>
