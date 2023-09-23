@@ -85,7 +85,7 @@ function AllProducts() {
 
         fetchData();
 
-    }, []); //orginally []
+    }, []);
 
     function calculateAverageRating(productId) {
         const productReviews = reviews.filter(review => review.product_id === productId);
