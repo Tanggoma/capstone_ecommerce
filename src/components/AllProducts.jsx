@@ -38,13 +38,37 @@ function AllProducts() {
 
     );
 
+    // useEffect(() => {
+
+    //     async function fetchData() {
+    //         try {
+    //             const token = state.token; // update 2 
+
+    //             const fetchedProducts = await getAllProducts(token); //update 2
+    //             setProducts(fetchedProducts);
+
+
+    //             const fetchedReviews = await getAllReviews();
+    //             setReviews(fetchedReviews);
+
+    //             setLoading(false)
+
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //             setError(error)
+    //         }
+    //     }
+
+    //     fetchData();
+
+    // }, [state.token]); //orginally []
+
     useEffect(() => {
 
         async function fetchData() {
             try {
-                const token = state.token; // update 2 
 
-                const fetchedProducts = await getAllProducts(token); //update 2
+                const fetchedProducts = await getAllProducts();
                 setProducts(fetchedProducts);
 
 
@@ -61,7 +85,7 @@ function AllProducts() {
 
         fetchData();
 
-    }, [state.token]); //orginally []
+    }, []); //orginally []
 
     function calculateAverageRating(productId) {
         const productReviews = reviews.filter(review => review.product_id === productId);

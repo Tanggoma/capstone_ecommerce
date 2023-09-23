@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
 //checked**
 // GET - /api/products/:id - get a single product by id
 
-router.get('/:id', requireUser, decodeSid, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const product = await getProductById(req.params.id);
         res.send(product);
@@ -37,7 +37,7 @@ router.get('/:id', requireUser, decodeSid, async (req, res, next) => {
 
 //checked** >> just add requireUser middleware >> check again 
 // POST - /api/products - create a new product
-router.post('/create', requireUser, decodeSid, async (req, res, next) => {
+router.post('/create', requireUser, async (req, res, next) => {
     try {
 
         const product = await createProduct(req.body);
@@ -51,7 +51,7 @@ router.post('/create', requireUser, decodeSid, async (req, res, next) => {
 
 //checked**
 /// PUT - /api/products/:id - update a product
-router.put('/:id', requireUser, decodeSid, async (req, res, next) => {
+router.put('/:id', requireUser, async (req, res, next) => {
     try {
         const productId = req.params.id;
         const updatedProduct = await updateProduct(productId, req.body);
@@ -63,7 +63,7 @@ router.put('/:id', requireUser, decodeSid, async (req, res, next) => {
 
 //checked**
 // DELETE - /api/products/:id - delete a product
-router.delete('/:id', requireUser, decodeSid, async (req, res, next) => {
+router.delete('/:id', requireUser, async (req, res, next) => {
     try {
         const productId = req.params.id;
         const deletedProduct = await deleteProduct(productId);
