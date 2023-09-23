@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom';
 import { SearchContext } from '../context/SearchContext';
 import { useNavigate } from 'react-router-dom';
 
+import { getCategories } from '../api';
+
 //import cart context
 import { useCart } from '../context/CartContext';
 
@@ -53,7 +55,8 @@ function NavigationBar() {
         const getAllcategories = async () => {
 
             try {
-                const response = await fetch('http://localhost:3000/api/categories')
+                // const response = await fetch('http://localhost:3000/api/categories')
+                const response = await getCategories();
 
                 const categories = await response.json();
 

@@ -1,8 +1,8 @@
 // FOR LOCAL
-const BASE_URL = `http://localhost:3000`
+// const BASE_URL = `http://localhost:3000`
 
 // FOR DEPLOY
-// const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
+const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
 
 // REGISTER 
 export async function registerUser(userData) {
@@ -264,6 +264,23 @@ export async function getReviewsByProductId(id) {
 
         if (!response.ok) {
             throw new Error("Failed to fetch reviews");
+        }
+        return response.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+// Get All Categories 
+export async function getCategories() {
+
+    const endpoint = '/api/categories'
+    try {
+        const response = await fetch(BASE_URL + endpoint);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch cateogories");
         }
         return response.json();
     } catch (error) {
