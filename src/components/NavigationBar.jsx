@@ -56,9 +56,10 @@ function NavigationBar() {
 
             try {
                 // const response = await fetch('http://localhost:3000/api/categories')
-                const response = await getCategories();
+                const categories = await getCategories();
+                // console.log(response);
 
-                const categories = await response.json();
+                // const categories = await response
 
                 setCategories(categories);
 

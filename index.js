@@ -16,8 +16,8 @@ const { userOrGuest, decodeSid, requireUser } = require('./middleware/requireUse
 app.use(express.static(path.join(__dirname, 'dist'))); //add >> For Deployment 
 app.use(morgan('dev'));
 app.use(cors({
-    // origin: 'http://localhost:5173', // frontend's address LOCAL **
-    origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address PRODUCTION
+    origin: 'http://localhost:5173', // frontend's address LOCAL **
+    // origin: 'https://scuba-commerce-ef8c050498e9.herokuapp.com', // frontend's address PRODUCTION
     credentials: true, // to use cookies or authentication
     allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id', 'credentials']
 }));
@@ -29,36 +29,36 @@ app.use(express.json());
 // FOR PRODUCTION
 app.set('trust proxy', 1); //for PRODUCTION
 
-app.use(session({
-    secret: 'secret-key',
-    resave: false,
-    saveUninitialized: true,     // ** use True for both local and dev
-    cookie: {
-        secure: true, //false for local **
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: 'lax', //for deploy
-        httpOnly: true,
-    }, // Set secure to true later for deploy using https. For local development, use false. **
-    genid: (req) => {
-        return uuidv4(); // Use UUIDs for session IDs
-    }
-}));
-
-// FOR LOCAL 
 // app.use(session({
 //     secret: 'secret-key',
 //     resave: false,
 //     saveUninitialized: true,     // ** use True for both local and dev
 //     cookie: {
-//         secure: false, //false for local **
+//         secure: true, //false for local **
 //         maxAge: 7 * 24 * 60 * 60 * 1000,
 //         sameSite: 'lax', //for deploy
-//         httpOnly: false,
+//         httpOnly: true,
 //     }, // Set secure to true later for deploy using https. For local development, use false. **
 //     genid: (req) => {
 //         return uuidv4(); // Use UUIDs for session IDs
 //     }
 // }));
+
+// FOR LOCAL 
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true,     // ** use True for both local and dev
+    cookie: {
+        secure: false, //false for local **
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        sameSite: 'lax', //for deploy
+        httpOnly: false,
+    }, // Set secure to true later for deploy using https. For local development, use false. **
+    genid: (req) => {
+        return uuidv4(); // Use UUIDs for session IDs
+    }
+}));
 
 app.get('/get-decoded-session-id', userOrGuest, requireUser, decodeSid, (req, res) => {
     console.log('req.session', req.session);
