@@ -28,6 +28,7 @@
     "express-session": "^1.17.3",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.1",
+    "jwt-decode": "^3.1.2",
     "mdb-react-ui-kit": "^6.2.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",

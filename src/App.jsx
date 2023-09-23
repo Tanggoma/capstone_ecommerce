@@ -1,17 +1,11 @@
-
-import { useState, useContext, useEffect } from 'react'
-import { Button, Navbar } from 'react-bootstrap';
-
-
-// import './App.css'
-// import '../style/App.css'
+import { useContext, useEffect } from 'react'
 import '../src/style/App.css'
+
+//Context
 import AuthContext from './context/AuthContext';
+import jwtDecode from 'jwt-decode'; // import for controlling state.user
 
-
-//Router
-// import { Route, createRoutesFromElements, createBrowserRouter, RouterProvider, Outlet, Routes } from "react-router-dom"
-
+//React Router
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 //Components
@@ -20,7 +14,6 @@ import NavigationBar from './components/NavigationBar';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
-import CarouselContainer from './components/CarouselContainer';
 import Singleproduct from './components/Singleproduct';
 import ProductByCategory from './components/ProductByCategory';
 import CheckOut from './components/CheckOut';
@@ -28,28 +21,42 @@ import Payment from './components/Payment';
 import Wishlist from './components/Wishlist';
 import ProductByBrand from './components/ProductByBrand';
 import OrdersHistory from './components/OrdersHistory';
-// import AddToCart from './components/AddToCart'; // Add to Cart 
-
 
 function App() {
 
   const { dispatch } = useContext(AuthContext);
 
-  // const [sessionId, setSessionId] = useState(null);
+  // useEffect(() => {
+  //   const storedToken = localStorage.getItem('authToken');
+  //   if (storedToken) {
+
+  //     dispatch({
+  //       type: 'LOGIN',
+  //       token: storedToken,
+  //       user: decodeUser(storedToken) // 
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     if (storedToken) {
-      // Restore the user's logged-in state using the token.
-      // Optionally, verify the token's validity with the backend.
-      dispatch({
-        type: 'LOGIN',
-        token: storedToken,
-        // user: decodeUser(storedToken) // 
-      });
+
+      let decodedUser = null;
+
+      try {
+        decodedUser = jwtDecode(storedToken)
+
+        dispatch({
+          type: 'LOGIN',
+          token: storedToken,
+          user: decodedUser
+        });
+
+      } catch (error) {
+        console.log(error)
+      }
     }
-
-
   }, []);
 
 

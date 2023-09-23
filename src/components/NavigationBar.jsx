@@ -39,6 +39,7 @@ function NavigationBar() {
 
     //auth context
     const { state } = useContext(AuthContext);
+    console.log(state)
 
     //search context
     const { setSearchTerm } = useContext(SearchContext);
@@ -72,6 +73,8 @@ function NavigationBar() {
 
         getAllcategories();
     }, []);
+
+    console.log('state.user', state.user)
 
     const handleShowAccountCanvas = () => {
         setIsAccountCanvasVisible(true);
