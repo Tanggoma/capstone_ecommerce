@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { registerUser } from '../api/index'
@@ -17,6 +18,8 @@ const Register = () => {
     const [street, setStreet] = useState('');
     const [zipcode, setZipCode] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [message, setMessage] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
     const userData = {
         username: username,
@@ -32,34 +35,55 @@ const Register = () => {
 
     const navigate = useNavigate();
 
-    const { dispatch } = useContext(AuthContext);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const regex = /^(?=.*[A-Z])(?=.*[0-9])\S{6,}$/;
+
+        if (!regex.test(password)) {
+            setErrorMsg("Password must be at least 6 characters long, contain at least one capital letter and one number, and have no spaces.");
+
+            setTimeout(() => {
+                setErrorMsg("");
+            }, 6000);
+
+            return;
+        }
 
         try {
             const result = await registerUser(userData);
 
-            if (result) {
-                dispatch({
-                    type: 'LOGIN',
-                    token: result.token,
-                    user: result.user
-                })
+            console.log(result);
+
+            if (result && result.token) {
+                setMessage("Thank you for signing up! Please log in to enjoy shopping.")
+
+                setTimeout(() => {
+                    setMessage("");
+                    navigate('/login');
+                }, 4000);
+
             }
 
-            navigate('/login');
         }
         catch (error) {
 
-            console.error('Registration failed.');
+            // console.log(error)
+            console.error('Registration failed.', error.message);
 
+            setErrorMsg(error.message);
+
+            setTimeout(() => {
+                setErrorMsg("");  // Clear the message after 6 seconds
+            }, 6000);
         }
     }
 
 
     return (
         <>
+            {message && <Alert className='mx-3 text-center' variant='info'> {`**${message}`} </Alert>}
+            {errorMsg && <Alert className='mx-3 text-center' variant='danger'> {`**${errorMsg}`} </Alert>}
             <Container className="vh-100 mt-5" >
                 <Row className="justify-content-md-center h-100">
                     <Col xs={12} md={6}>
@@ -142,7 +166,7 @@ const Register = () => {
                                 <Form.Group className="mb-4" controlId="zipcode">
 
                                     <Form.Control
-                                        type="text"
+                                        type="number"
                                         placeholder="Zip code"
                                         value={zipcode}
                                         onChange={(e) => setZipCode(e.target.value)}
@@ -152,7 +176,7 @@ const Register = () => {
                                 <Form.Group className="mb-4" controlId="phone_nuumber">
 
                                     <Form.Control
-                                        type="text"
+                                        type="number"
                                         placeholder="Phone Number"
                                         value={phoneNumber}
                                         onChange={(e) => setPhoneNumber(e.target.value)}
@@ -163,7 +187,7 @@ const Register = () => {
                                 <Button variant="danger" type="submit" className="w-100">
                                     Sign Up
                                 </Button>
-                                {/* <h4>Do not have an account? Click here to <Link to="/signup">Sign up</Link></h4> */}
+
 
                             </Form>
                         </div>

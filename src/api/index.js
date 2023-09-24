@@ -1,8 +1,8 @@
 // FOR LOCAL
-const BASE_URL = `http://localhost:3000`
+// const BASE_URL = `http://localhost:3000`
 
 // FOR DEPLOY
-// const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
+const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
 
 // REGISTER 
 export async function registerUser(userData) {
@@ -18,18 +18,19 @@ export async function registerUser(userData) {
             body: JSON.stringify(userData)
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
         const data = await response.json();
 
-        if (data.error) {
-            console.error(data.message);
-            return null;
+        if (!response.ok) {
+
+            if (data.error.message && data.error.message.includes('users_email_key')) {
+                throw new Error('An account with this email already exists')
+            } else {
+                throw new Error(data.message);
+            }
         }
 
-        console.log(data.message); // "You're signed up!"
+        // console.log(data.message); // "You're signed up!"
+
         return {
             user: data.user,
             token: data.token
@@ -37,7 +38,7 @@ export async function registerUser(userData) {
 
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error.message);
-        return null;
+        throw error;
     }
 }
 
@@ -90,7 +91,7 @@ export async function getDecodedSessionId() {
             headers: headers
         });
 
-        console.log('Response headers:', response.headers);
+        // console.log('Response headers:', response.headers);
 
         if (response.ok) {
             const data = await response.json();
@@ -361,7 +362,7 @@ export async function fetchCartBySession() {
         }
 
         const data = await response.json();
-        console.log('data', data)
+        // console.log('data', data)
         return data;
 
     } catch (error) {
