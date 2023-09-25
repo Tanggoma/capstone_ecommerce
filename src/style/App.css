@@ -115,3 +115,37 @@ body {
 .carousel-arrow-right {
   right: 0;
 }
+
+/* Moving Banner Free Shipping */
+@keyframes moveBanner {
+  0% {
+
+    transform: translateX(100vw)
+  }
+
+  100% {
+
+    transform: translateX(-100vw);
+  }
+}
+
+.moving-banner {
+  display: inline-block;
+  white-space: nowrap;
+  animation: moveBanner 40s linear infinite;
+}
+
+.bg-danger.bg-gradient {
+  overflow: hidden;
+
+}
+
+.erd:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.footer-hover:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}

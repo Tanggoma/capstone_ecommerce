@@ -3,11 +3,13 @@ import CarouselContainer from './CarouselContainer'
 import AllProducts from './AllProducts'
 import BrandCarousel from './BrandCorousel'
 import Footer from './Footer'
+import ShippingBanner from './ShippingBanner'
 
 
 const Home = () => {
     return (
         <>
+            <ShippingBanner />
             <CarouselContainer />
             <h2 className='text-center mt-5 mb-5 bg-dark bg-gradient bg-opacity-10 p-3'> All products</h2>
             <AllProducts />
