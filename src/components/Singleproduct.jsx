@@ -9,6 +9,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import ReactRating from 'react-rating-stars-component';
 import { FiHeart } from 'react-icons/fi'
 import { Modal } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 import ReviewsDetails from './ReviewsDetails';
@@ -34,6 +35,7 @@ const Singleproduct = () => {
     const [reviews, setReviews] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [inWishlist, setInWishlist] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     //offcanvas hook
@@ -54,14 +56,15 @@ const Singleproduct = () => {
 
             try {
 
-
                 const productData = await getProductDetail(id, token);
-                // console.log(productData)
-                setProduct(productData)
-
                 const reviewsData = await getReviewsByProductId(id);
 
-                setReviews(reviewsData);
+                setTimeout(() => {
+                    setIsLoading(false)
+                    setProduct(productData)
+                    setReviews(reviewsData);
+                }, 200);
+
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -110,12 +113,12 @@ const Singleproduct = () => {
 
 
 
-    if (error) return <p>Error loading product: {error.message}</p>;
-    if (!product) return <p>Product not found</p>;
+    // if (!product) return <p>Product not found</p>;
 
     const avgRating = calculateAverageRating();
     const ratingValue = avgRating > 0 ? avgRating : 0;
 
+    if (error) return <p>Error loading product: {error.message}</p>;
 
     // const handleAddToWishlist = async () => {
     //     try {
@@ -181,78 +184,89 @@ const Singleproduct = () => {
 
     return (
         <>
-            <Container>
-                <Card style={{ width: '100%' }}>
-                    <Row >
-                        <Col md={8} style={{ borderRight: '1px solid #e0e0e0' }}>
-                            <div className="d-flex align-items-center justify-content-center h-100">
-                                <Card.Img
-                                    id='single-img'
-                                    src={product.image_url}
-                                    alt={product.title}
-                                    style={{ width: '70%' }}
-                                    onClick={() => setShowModal(true)}
-                                // onMouseLeave={() => setShowModal(false)}
 
-                                />
-                                <Modal show={showModal} onHide={() => setShowModal(false)} size='lg'>
-                                    <Modal.Body>
-                                        <img src={product.image_url} alt="Zoomed Description" className="img-fluid" />
-                                    </Modal.Body>
-                                </Modal>
-                            </div>
-                        </Col>
+            {isLoading ? (
 
-                        <Col md={4}>
-                            <Card.Body>
-                                <Card.Text>
-                                    Brand: {product.brand}
-                                </Card.Text>
+                <div className="d-flex justify-content-center my-5">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            ) :
+                (
+                    <>
+                        <Container>
+                            <Card style={{ width: '100%' }}>
+                                <Row >
+                                    <Col md={8} style={{ borderRight: '1px solid #e0e0e0' }}>
+                                        <div className="d-flex align-items-center justify-content-center h-100">
+                                            <Card.Img
+                                                id='single-img'
+                                                src={product.image_url}
+                                                alt={product.title}
+                                                style={{ width: '70%' }}
+                                                onClick={() => setShowModal(true)}
+                                            // onMouseLeave={() => setShowModal(false)}
 
-                                <div className="heart-icon-container" onClick={handleAddToWishlist}>
-                                    <FiHeart style={{ width: "2rem", height: "2rem", color: inWishlist ? 'blue' : 'black' }} />
-                                </div>
+                                            />
+                                            <Modal show={showModal} onHide={() => setShowModal(false)} size='lg'>
+                                                <Modal.Body>
+                                                    <img src={product.image_url} alt="Zoomed Description" className="img-fluid" />
+                                                </Modal.Body>
+                                            </Modal>
+                                        </div>
+                                    </Col>
 
-                                <Card.Title className='mb-5 font-weight-bold'>{product.title}</Card.Title>
+                                    <Col md={4}>
+                                        <Card.Body>
+                                            <Card.Text>
+                                                Brand: {product.brand}
+                                            </Card.Text>
 
-                                {reviews.length > 0 && <ReactRating
-                                    count={5}
+                                            <div className="heart-icon-container" onClick={handleAddToWishlist}>
+                                                <FiHeart style={{ width: "2rem", height: "2rem", color: inWishlist ? 'blue' : 'black' }} />
+                                            </div>
 
-                                    value={ratingValue}
+                                            <Card.Title className='mb-5 font-weight-bold'>{product.title}</Card.Title>
 
-                                    size={15}
-                                    activeColor="#ffd700"
-                                    readOnly
-                                />}
+                                            {reviews.length > 0 && <ReactRating
+                                                count={5}
 
-                                <span className="ml-2 text-primary">{reviews.length > 0 ? `${reviews.length} reviews` : 'No reviews'}</span>
+                                                value={ratingValue}
 
-                                <Card.Text>
-                                    {product.description}
-                                </Card.Text>
-                                <Card.Text className='mt-5 mb-3'>
-                                    Price: ${product.price}
-                                </Card.Text>
-                                <Container>
-                                    <Button variant="primary" onClick={() => handleQuantity('decrement')}>-</Button>
-                                    <span className='pl-4'> {selectedQuantity} </span>
-                                    <Button variant="primary" onClick={() => handleQuantity('increment')}>+</Button>
-                                    <br />
+                                                size={15}
+                                                activeColor="#ffd700"
+                                                readOnly
+                                            />}
 
-                                    <Button variant="danger" className='mt-5' onClick={addProductToCart} aria-controls="offcanvasRight">Add to Cart</Button>
+                                            <span className="ml-2 text-primary">{reviews.length > 0 ? `${reviews.length} reviews` : 'No reviews'}</span>
 
-                                    <CartOffCanvas show={show} onHide={handleCloseAndRedirect} />
-                                </Container>
+                                            <Card.Text>
+                                                {product.description}
+                                            </Card.Text>
+                                            <Card.Text className='mt-5 mb-3'>
+                                                Price: ${product.price}
+                                            </Card.Text>
+                                            <Container>
+                                                <Button variant="primary" onClick={() => handleQuantity('decrement')}>-</Button>
+                                                <span className='pl-4'> {selectedQuantity} </span>
+                                                <Button variant="primary" onClick={() => handleQuantity('increment')}>+</Button>
+                                                <br />
 
-                            </Card.Body>
+                                                <Button variant="danger" className='mt-5' onClick={addProductToCart} aria-controls="offcanvasRight">Add to Cart</Button>
 
-                        </Col>
+                                                <CartOffCanvas show={show} onHide={handleCloseAndRedirect} />
+                                            </Container>
 
-                    </Row>
-                </Card>
-            </Container >
-            <ReviewsDetails reviews={reviews} ratingValue={ratingValue} />
+                                        </Card.Body>
 
+                                    </Col>
+
+                                </Row>
+                            </Card>
+                        </Container >
+                        <ReviewsDetails reviews={reviews} ratingValue={ratingValue} />
+                    </>)}
         </>
     );
 
