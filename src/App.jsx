@@ -22,6 +22,7 @@ import Wishlist from './components/Wishlist';
 import ProductByBrand from './components/ProductByBrand';
 import OrdersHistory from './components/OrdersHistory';
 import ERD from './components/ERD';
+import ErrorPage from './components/ErrorPage';
 
 function App() {
 
@@ -78,6 +79,7 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/order-history" element={<OrdersHistory />} />
         <Route path="/ERD" element={<ERD />} />
+        <Route path="*" element={<ErrorPage />} />
 
 
       </Routes>

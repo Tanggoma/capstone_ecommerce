@@ -3,6 +3,7 @@ import { getAllProducts, getAllReviews } from '../api'
 import { useParams, Link } from 'react-router-dom';
 import { Col, Row, Card } from 'react-bootstrap';
 import ReactRating from 'react-rating-stars-component';
+import Spinner from 'react-bootstrap/Spinner';
 
 const ProductByBrand = () => {
 
@@ -11,6 +12,7 @@ const ProductByBrand = () => {
     const [productByBrand, setProductByBrand] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     async function getProductsByBrand(brand) {
         const allProducts = await getAllProducts();
@@ -24,13 +26,16 @@ const ProductByBrand = () => {
             try {
 
                 const fetchedProducts = await getAllProducts();
-                setProducts(fetchedProducts);
-
                 const fetchedProductsByBrand = await getProductsByBrand(brand);
-                setProductByBrand(fetchedProductsByBrand)
-
                 const fetchedReviews = await getAllReviews();
-                setReviews(fetchedReviews);
+
+                setTimeout(() => {
+                    setIsLoading(false)
+                    setProducts(fetchedProducts);
+                    setProductByBrand(fetchedProductsByBrand)
+                    setReviews(fetchedReviews);
+
+                }, 200);
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -55,45 +60,58 @@ const ProductByBrand = () => {
 
     return (
         <>
-            {productByBrand.length === 0 && <h4 className='text-center my-5 text-primary'> We are importing more products from this brand. They are on the way! </h4>}
-
-            <Row xs={2} md={5} className="g-4">
-                {reviews.length > 0 && productByBrand.map((product, idx) => {
-                    const avgRating = calculateAverageRating(product.id);
-                    const reviewCount = getReviewCountForProduct(product.id);
-                    const ratingValue = avgRating > 0 ? avgRating : null;
-                    return (
-
-                        <Col key={idx}>
-                            <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <Card id='card-container'>
-                                    <Card.Img variant="top" src={product.image_url} />
-                                    <Card.Body>
-                                        <Card.Text>
-                                            {product.brand}
-                                        </Card.Text>
-                                        <Card.Title> {product.title}</Card.Title>
-                                        {reviewCount > 0 &&
-                                            <ReactRating
-                                                count={5}
-                                                value={ratingValue}
-                                                size={15}
-                                                activeColor="#ffd700"
-                                            />}
-                                        <span className="ml-2">{reviewCount > 0 ? `${reviewCount} reviews` : 'No reviews'}</span>
 
 
-                                        <Card.Text className='text-danger mt-4'>
-                                            ${product.price}
-                                        </Card.Text>
+            {isLoading ? (
 
-                                    </Card.Body>
-                                </Card>
-                            </Link>
-                        </Col>
-                    )
-                })}
-            </Row>
+                <div className="d-flex justify-content-center my-5">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            ) :
+                productByBrand.length === 0 ? <h4 className='text-center my-5 text-primary'> We are importing more products from this brand. They are on the way! </h4>
+                    :
+
+
+                    <Row xs={2} md={5} className="g-4">
+                        {reviews.length > 0 && productByBrand.map((product, idx) => {
+                            const avgRating = calculateAverageRating(product.id);
+                            const reviewCount = getReviewCountForProduct(product.id);
+                            const ratingValue = avgRating > 0 ? avgRating : null;
+                            return (
+
+                                <Col key={idx}>
+                                    <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        <Card id='card-container'>
+                                            <Card.Img variant="top" src={product.image_url} />
+                                            <Card.Body>
+                                                <Card.Text>
+                                                    {product.brand}
+                                                </Card.Text>
+                                                <Card.Title> {product.title}</Card.Title>
+                                                {reviewCount > 0 &&
+                                                    <ReactRating
+                                                        count={5}
+                                                        value={ratingValue}
+                                                        size={15}
+                                                        activeColor="#ffd700"
+                                                    />}
+                                                <span className="ml-2">{reviewCount > 0 ? `${reviewCount} reviews` : 'No reviews'}</span>
+
+
+                                                <Card.Text className='text-danger mt-4'>
+                                                    ${product.price}
+                                                </Card.Text>
+
+                                            </Card.Body>
+                                        </Card>
+                                    </Link>
+                                </Col>
+                            )
+                        })}
+                    </Row>
+            }
         </>
     );
 

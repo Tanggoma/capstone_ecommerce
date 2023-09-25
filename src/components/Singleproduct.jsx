@@ -1,8 +1,6 @@
-// Pending wishlist function  
-
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProductDetail, getReviewsByProductId, addProductToWishList } from '../api';
+import { getProductDetail, getReviewsByProductId, addProductToWishList, getWishListByUser } from '../api';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -10,8 +8,6 @@ import ReactRating from 'react-rating-stars-component';
 import { FiHeart } from 'react-icons/fi'
 import { Modal } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
-
-
 import ReviewsDetails from './ReviewsDetails';
 //context
 import AuthContext from '../context/AuthContext';
@@ -36,7 +32,7 @@ const Singleproduct = () => {
     const [showModal, setShowModal] = useState(false);
     const [inWishlist, setInWishlist] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-
+    const [alreadyInWishlist, setAlreadyInWishlist] = useState(false);
 
     //offcanvas hook
     const [show, setShow] = useState(false);
@@ -64,6 +60,20 @@ const Singleproduct = () => {
                     setProduct(productData)
                     setReviews(reviewsData);
                 }, 200);
+
+
+                if (isLoggedIn()) {
+                    const data = await getWishListByUser();
+
+                    if (data.some(item => item.product_id === parseInt(id))) setAlreadyInWishlist(true)
+
+                } else {
+                    let guestWishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
+                    if (guestWishlist.some(item => item.id === parseInt(id))) {
+                        setAlreadyInWishlist(true);
+                    }
+
+                }
 
 
             } catch (error) {
@@ -112,24 +122,11 @@ const Singleproduct = () => {
     }
 
 
-
-    // if (!product) return <p>Product not found</p>;
-
     const avgRating = calculateAverageRating();
     const ratingValue = avgRating > 0 ? avgRating : 0;
 
     if (error) return <p>Error loading product: {error.message}</p>;
 
-    // const handleAddToWishlist = async () => {
-    //     try {
-    //         await addProductToWishList(product.id);
-    //         setInWishlist(true);
-    //         alert('Product added to wishlist!');
-    //     } catch (error) {
-    //         console.error('Error adding product to wishlist:', error.message);
-    //         alert('Failed to add product to wishlist. Please try again.');
-    //     }
-    // };
 
     function isLoggedIn() {
         return !!localStorage.getItem('authToken');
@@ -149,23 +146,24 @@ const Singleproduct = () => {
         };
 
         try {
-            console.log("handleAddToWishlist function called");
+            // console.log("handleAddToWishlist function called");
             if (isLoggedIn()) {
-                console.log("User is logged in");
+                // console.log("User is logged in");
 
                 const response = await addProductToWishList(product.id);
 
                 if (response && response.message === 'Product added to wishlist!') {
                     setInWishlist(true);
-                    alert('Product added to wishlist!');
+                    // alert('Product added to wishlist!');
                 }
 
             } else {
 
-                console.log("User is NOT logged in");
+                // console.log("User is NOT logged in");
                 let wishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
 
                 if (wishlist.some(item => item.id === wishlist_item.id)) {
+                    setAlreadyInWishlist(true)
                     alert('Product is already in the wishlist!');
                     return;
                 }
@@ -173,7 +171,7 @@ const Singleproduct = () => {
                 wishlist.push(wishlist_item);
                 localStorage.setItem('guestWishlist', JSON.stringify(wishlist));
                 setInWishlist(true);
-                alert('Product added to wishlist!');
+                // alert('Product added to wishlist!');
             }
 
         } catch (error) {
@@ -224,7 +222,7 @@ const Singleproduct = () => {
                                             </Card.Text>
 
                                             <div className="heart-icon-container" onClick={handleAddToWishlist}>
-                                                <FiHeart style={{ width: "2rem", height: "2rem", color: inWishlist ? 'blue' : 'black' }} />
+                                                <FiHeart style={{ width: "2rem", height: "2rem", color: inWishlist || alreadyInWishlist ? 'red' : 'black' }} />
                                             </div>
 
                                             <Card.Title className='mb-5 font-weight-bold'>{product.title}</Card.Title>
