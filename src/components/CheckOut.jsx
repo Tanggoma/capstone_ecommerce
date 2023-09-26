@@ -110,6 +110,10 @@ const CheckOut = () => {
 
     const handlePayment = async () => {
 
+        if (cart.length === 0) {
+            return
+        }
+
         // console.log('clicked')
         try {
             await postOrderHistory(groupedCartArray, products)

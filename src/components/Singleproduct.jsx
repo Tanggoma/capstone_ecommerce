@@ -59,7 +59,7 @@ const Singleproduct = () => {
                     setIsLoading(false)
                     setProduct(productData)
                     setReviews(reviewsData);
-                }, 200);
+                }, 100);
 
 
                 if (isLoggedIn()) {

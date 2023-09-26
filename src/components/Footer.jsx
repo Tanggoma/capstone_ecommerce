@@ -36,7 +36,7 @@ const Footer = () => {
                     <Col md={4} className='mx-auto'>
                         <h5 className='mt-4 text-danger'>About project</h5>
                         <ul className="list-unstyled">
-                            <li className='text-warning footer-hover'>Read Me</li>
+                            <li className='text-warning footer-hover' onClick={() => navigate('/readme')}>Read Me</li>
                             <li className='text-warning footer-hover' onClick={handleClickERD}>Database ERD</li>
                             <li className='text-warning footer-hover' onClick={() => window.open("https://github.com/Tanggoma/capstone_ecommerce", "_blank")}>
                                 Github

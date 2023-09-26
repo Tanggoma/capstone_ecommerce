@@ -10,6 +10,7 @@ function WriteReviewModal({ show, handleClose, resetForm, onResetComplete }) {
 
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
+    const [reviewResponse, setReviewResponse] = useState(false);
 
     const params = useParams();
     const productId = params.id;
@@ -20,9 +21,16 @@ function WriteReviewModal({ show, handleClose, resetForm, onResetComplete }) {
 
         localStorage.setItem(`reviewed_${productId}`, true); // prevent re-submit product reviews by the same user
 
-        handleClose();
+        setReviewResponse(true)
+
 
     }
+
+    const handleAfterReviewClose = () => {
+        setReviewResponse(false)
+        handleClose();
+    }
+
 
     // clear form when close the modal(without submitting)
     useEffect(() => {
@@ -42,36 +50,48 @@ function WriteReviewModal({ show, handleClose, resetForm, onResetComplete }) {
             <Modal.Header closeButton>
                 <Modal.Title> Please share your experience </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label> Overall rating </Form.Label>
 
-                        <ReactRating
-                            count={5}
-                            value={rating}
-                            size={15}
-                            activeColor="#ffd700"
-                            onChange={(newRating) => setRating(newRating)}
-                        />
-                    </Form.Group>
-                    <Form.Group
-                        className="mb-3"
-                        controlId="exampleForm.ControlTextarea1"
-                    >
-                        <Form.Label>Review </Form.Label>
-                        <Form.Control as="textarea" rows={3} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button type="submit" disabled={!rating || !reviewText} variant="primary" onClick={submitReview}>
-                    Submit
-                </Button>
-            </Modal.Footer>
+            {reviewResponse ?
+                (<Modal.Body>
+                    <p> Thank you for your feedback </p>
+                    <Button variant='primary' onClick={handleAfterReviewClose}> Close  </Button>
+
+                </Modal.Body>
+                ) :
+                (
+                    <>
+                        <Modal.Body>
+                            <Form>
+                                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                    <Form.Label> Overall rating </Form.Label>
+
+                                    <ReactRating
+                                        count={5}
+                                        value={rating}
+                                        size={15}
+                                        activeColor="#ffd700"
+                                        onChange={(newRating) => setRating(newRating)}
+                                    />
+                                </Form.Group>
+                                <Form.Group
+                                    className="mb-3"
+                                    controlId="exampleForm.ControlTextarea1"
+                                >
+                                    <Form.Label>Review </Form.Label>
+                                    <Form.Control as="textarea" rows={3} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button type="submit" disabled={!rating || !reviewText} variant="primary" onClick={submitReview}>
+                                Submit
+                            </Button>
+                        </Modal.Footer>
+                    </>
+                )}
         </Modal>
     );
 }

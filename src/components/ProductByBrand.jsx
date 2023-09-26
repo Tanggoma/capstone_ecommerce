@@ -35,7 +35,7 @@ const ProductByBrand = () => {
                     setProductByBrand(fetchedProductsByBrand)
                     setReviews(fetchedReviews);
 
-                }, 200);
+                }, 100);
 
             } catch (error) {
                 console.error("Error fetching data:", error);

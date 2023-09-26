@@ -23,6 +23,7 @@ import ProductByBrand from './components/ProductByBrand';
 import OrdersHistory from './components/OrdersHistory';
 import ERD from './components/ERD';
 import ErrorPage from './components/ErrorPage';
+import Readme from './components/Readme';
 
 function App() {
 
@@ -79,6 +80,7 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/order-history" element={<OrdersHistory />} />
         <Route path="/ERD" element={<ERD />} />
+        <Route path="/readme" element={<Readme />} />
         <Route path="*" element={<ErrorPage />} />
 
 
