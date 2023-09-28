@@ -15,10 +15,10 @@ export const CartProvider = ({ children }) => {
     useEffect(() => {
         const fetchSessionAndLoadCart = async () => {
             const token = await state.token;
-            console.log('token cart context when fetch', token);
+            // console.log('token cart context when fetch', token);
 
             const sessionId = await getDecodedSessionId();
-            console.log('Decoded sessionId:', sessionId);
+            // console.log('Decoded sessionId:', sessionId);
 
             if (token) {
                 loadUserCart(token);
@@ -63,7 +63,6 @@ export const CartProvider = ({ children }) => {
         try {
             const response = await addProductToCart(product.id, selectedQuantity, userId, sessionId);
 
-            console.log(response)
             if (response && response.message) {
                 const existingItemIndex = cart.findIndex(item => item.product_id === product.id);
 
@@ -89,8 +88,6 @@ export const CartProvider = ({ children }) => {
         const userId = state?.user?.id;
 
         const sessionId = await getDecodedSessionId();
-        console.log('DecodedsessionId', sessionId);
-
 
         try {
             const response = await deleteProductFromCart(userId, productId, sessionId);
@@ -107,12 +104,12 @@ export const CartProvider = ({ children }) => {
 
     // Empty the cart after payment
     async function clearCart() {
-        console.log('Initiating clear cart function');
+
         const userId = state?.user?.id;
         const sessionId = await getDecodedSessionId();
         const token = state?.token;
 
-        console.log(`Clear cart with userId: ${userId}, sessionId: ${sessionId}, token: ${token}`);
+        // console.log(`Clear cart with userId: ${userId}, sessionId: ${sessionId}, token: ${token}`);
 
         try {
             const response = await clearCartAfterPayment(userId, sessionId, token);

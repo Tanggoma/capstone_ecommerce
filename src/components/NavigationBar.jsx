@@ -35,9 +35,9 @@ function NavigationBar() {
 
     //cart context
     const { cart } = useCart();
-    // console.log('cart', cart)
+
     const totalQuantity = cart.reduce((acc, item) => acc + (item.cart_quantity || item.quantity), 0);
-    // console.log(totalQuantity)
+
 
     //auth context
     const { state } = useContext(AuthContext);
@@ -85,7 +85,6 @@ function NavigationBar() {
             type: 'LOGOUT'
         });
 
-        console.log('logout')
         navigate('/');
     }
 
@@ -151,12 +150,12 @@ function NavigationBar() {
                             <BiSearch id='nav-item' style={{ width: "2rem", height: "2rem", color: 'white' }} />
                         </Button>
 
-                        <Nav.Link id='nav-item'>
-                            <Link id='nav-item' to="/wishlist">
-                                <FiHeart id='nav-item' style={{ width: "2rem", height: "2rem", color: 'white' }} />
-                            </Link>
 
-                        </Nav.Link>
+                        <Link id='nav-item' to="/wishlist">
+                            <FiHeart id='nav-item' style={{ width: "2rem", height: "2rem", color: 'white' }} />
+                        </Link>
+
+
 
                         <Button
                             onClick={handleShowCart}

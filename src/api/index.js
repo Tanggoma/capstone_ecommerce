@@ -1,8 +1,8 @@
 // FOR LOCAL
-// const BASE_URL = `http://localhost:3000`
+const BASE_URL = `http://localhost:3000`
 
 // FOR DEPLOY
-const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
+// const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
 
 // REGISTER 
 export async function registerUser(userData) {
@@ -623,7 +623,7 @@ export async function getWishListByUser() {
             credentials: 'include'
         })
 
-        console.log(response)
+
 
         if (!response.ok) {
             const errorData = await response.json();
@@ -894,7 +894,7 @@ export async function postOrderHistory(cartItems, products) {
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.log('Failed to post orders history', errorData.error)
+            // console.log('Failed to post orders history', errorData.error)
             throw new Error(errorData.error);
         }
 

@@ -66,8 +66,7 @@ const CheckOut = () => {
 
     //convert to array 
     const groupedCartArray = Object.values(groupedCartItems);
-    console.log('groupedCartArray', groupedCartArray)
-    console.log('cart', cart)
+
 
     useEffect(() => {
         async function fetchProductDetails() {
@@ -162,14 +161,6 @@ const CheckOut = () => {
     }
 
     const handleUpdate = () => {
-
-        console.log('update')
-
-        console.log('selectProduct', selectedProduct)
-
-        console.log('Product ID', selectedProduct.product_id)
-
-        console.log('Quantity', selectedProduct.quantity)
 
         if (selectedProduct) {
             handleUpdateCart(selectedProduct.product_id, selectedProduct.quantity);

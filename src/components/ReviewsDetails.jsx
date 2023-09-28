@@ -146,7 +146,7 @@ function ReviewsDetails({ reviews, ratingValue }) {
                 <WriteReviewModal show={show} setShow={setShow} handleClose={handleClose} handleShow={handleShow} resetForm={shouldResetForm} onResetComplete={onResetComplete} />
 
                 {filteredReviews.length > 0 && filteredReviews.map((review, index) => (
-                    <Accordion.Body key={review.id}>
+                    <Accordion.Body key={review.review_id}>
                         <Card>
                             <Card.Body>
                                 <div className='d-flex align-items-center justify-content-between'>

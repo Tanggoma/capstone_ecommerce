@@ -19,7 +19,7 @@ function Login() {
         try {
             const { token, user } = await loginUser({ username, password });
             localStorage.setItem('authToken', token);
-            console.log('token', token)
+
 
             dispatch({
                 type: 'LOGIN',

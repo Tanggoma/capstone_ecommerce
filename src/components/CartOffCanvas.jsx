@@ -13,15 +13,6 @@ function CartOffCanvas({ show, onHide }) {
 
     const navigate = useNavigate();
 
-    //group cart by product ID (in case multiple selection per items are made)
-    // const groupedCartItems = cart.reduce((acc, curr) => {
-    //     if (!acc[curr.product_id]) {
-    //         acc[curr.product_id] = { ...curr, quantity: 0 };
-    //     }
-    //     acc[curr.product_id].quantity += curr.quantity;
-    //     return acc;
-    // }, {});
-
     const groupedCartItems = cart.reduce((acc, curr) => {
         if (!acc[curr.product_id]) {
             acc[curr.product_id] = { ...curr };
@@ -88,7 +79,6 @@ function CartOffCanvas({ show, onHide }) {
     }
 
     const handleCheckOut = () => {
-        console.log('checkout')
         navigate('/checkout')
     }
     const handleCartNone = () => {
@@ -151,10 +141,10 @@ function CartOffCanvas({ show, onHide }) {
 
                     {cart.length === 0 ?
                         (
-                            <Button className='bg-danger mt-5' onClick={handleCartNone}> Continue Shopping </Button>
+                            <Button className='bg-danger mt-5 border border-dark' onClick={handleCartNone}> Continue Shopping </Button>
                         ) :
                         (
-                            <Button className='bg-danger' onClick={handleCheckOut}> Check Out </Button>
+                            <Button className='bg-danger border border-dark' onClick={handleCheckOut}> Check Out </Button>
                         )}
                 </div>
             </Offcanvas.Body>

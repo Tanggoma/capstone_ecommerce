@@ -59,7 +59,7 @@ const Profile = () => {
             type: 'LOGOUT'
         });
 
-        console.log('logout')
+
         navigate('/');
     }
 

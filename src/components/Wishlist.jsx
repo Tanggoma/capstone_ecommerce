@@ -20,12 +20,12 @@ const Wishlist = () => {
             try {
                 if (isLoggedIn()) {
                     const data = await getWishListByUser();
-                    console.log(data);
+
                     setWishListItems(data);
 
                 } else {
                     let wishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
-                    console.log('wishlist', wishlist)
+
                     setWishListItems(wishlist);
 
                 }
@@ -55,11 +55,9 @@ const Wishlist = () => {
 
     const handleDeleteWishlistByUser = async (productId) => {
 
-        console.log('delete by user');
 
         if (isLoggedIn()) {
 
-            console.log("User is logged in");
 
             try {
 
