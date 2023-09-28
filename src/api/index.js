@@ -1,8 +1,8 @@
 // FOR LOCAL
-const BASE_URL = `http://localhost:3000`
+// const BASE_URL = `http://localhost:3000`
 
 // FOR DEPLOY
-// const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
+const BASE_URL = 'https://scuba-commerce-ef8c050498e9.herokuapp.com'
 
 // REGISTER 
 export async function registerUser(userData) {
@@ -130,71 +130,7 @@ export async function getAllProducts() {
 }
 
 
-// export async function getAllProducts(token) {
-//     const endpoint = '/api/products';
-
-//     // Define headers object
-//     const headers = {
-//         'Content-Type': 'application/json',
-//     };
-
-//     if (token) {
-//         headers['Authorization'] = `Bearer ${token}`;
-//     } else {
-//         // If no token is provided, try to retrieve the decoded session ID
-//         const sessionId = await getDecodedSessionId();
-
-//         if (!sessionId) {
-//             throw new Error("No authentication token or session ID provided");
-//         }
-
-//         headers['X-Session-ID'] = sessionId; // Assuming the backend expects session ID in a header named X-Session-ID
-//     }
-
-//     try {
-//         const response = await fetch(BASE_URL + endpoint, {
-//             method: 'GET',
-//             headers: headers,
-//             credentials: 'include'
-//         });
-
-//         if (!response.ok) {
-//             throw new Error(`Error fetching products`);
-//         }
-
-//         const products = await response.json();
-//         return products;
-
-//     } catch (error) {
-//         console.log(error);
-//         throw error;
-//     }
-// }
-
 // Get single product details
-// export async function getProductDetail(id) {
-
-//     const endpoint = `/api/products/${id}`
-//     console.log('id', id)
-
-//     try {
-
-//         const response = await fetch(BASE_URL + endpoint)
-
-//         if (!response.ok) {
-//             throw new Error(`Error fetching products`);
-//         }
-//         const detail = await response.json();
-//         console.log(detail)
-//         return detail
-//     } catch (error) {
-//         console.log(error)
-//         throw error;
-//     }
-
-// }
-
-// update 2 
 export async function getProductDetail(id, token) {
     const endpoint = `/api/products/${id}`;
     // console.log('id', id);

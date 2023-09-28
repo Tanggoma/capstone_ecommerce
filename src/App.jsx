@@ -29,18 +29,6 @@ function App() {
 
   const { dispatch } = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem('authToken');
-  //   if (storedToken) {
-
-  //     dispatch({
-  //       type: 'LOGIN',
-  //       token: storedToken,
-  //       user: decodeUser(storedToken) // 
-  //     });
-  //   }
-  // }, []);
-
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     if (storedToken) {
@@ -82,8 +70,6 @@ function App() {
         <Route path="/ERD" element={<ERD />} />
         <Route path="/readme" element={<Readme />} />
         <Route path="*" element={<ErrorPage />} />
-
-
       </Routes>
     </Router>
 
