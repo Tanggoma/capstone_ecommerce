@@ -16,6 +16,7 @@ const OrdersHistory = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     const { state } = useContext(AuthContext);
     // const token = state.token;
 
@@ -25,21 +26,32 @@ const OrdersHistory = () => {
             try {
                 const orderData = await getOrderHistory()
 
+                // console.log('orderData', orderData)
+
                 const orderItems = orderData[0].items
 
+                // console.log(orderItems)
+
+                // if (orderData.length === 0) {
+                //     setIsLoading(false)
+                //     setNoOrder(true);
+                // } else {
+                //     setIsLoading(false)
+                //     setOrders(orderItems)
+                // }
 
                 setTimeout(() => {
                     setIsLoading(false)
                     setOrders(orderItems)
-                }, 1000);
+                }, 500);
 
                 const fetchedProducts = await getAllProducts()
                 setProducts(fetchedProducts);
 
 
             } catch (error) {
-
                 setError(error)
+                setIsLoading(false)
             }
         }
 

@@ -53,7 +53,7 @@ const Register = () => {
         try {
             const result = await registerUser(userData);
 
-            console.log(result);
+            // console.log(result);
 
             if (result && result.token) {
                 setMessage("Thank you for signing up! Please log in to enjoy shopping.")
