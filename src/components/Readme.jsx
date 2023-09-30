@@ -36,13 +36,19 @@ const Readme = () => {
                         <h5 className='text-center'> Features:</h5>
                         <Col md={12} className='border p-2'>
                             <ul>
-                                <li><span className='text-primary'>User Authentication </span> : Secure registration with condition on password, controlling username and email duplication using user database and login functionalities</li>
-                                <li><span className='text-primary'>Product Display </span> : A wide range of diving equipment, divided into 7 product category with product detail information on single page. You can also sort by price, browse and filter products by brand and category. </li>
-                                <li><span className='text-primary'>Cart System </span> : Add products to cart, edit cart ,remove item in cart. Cart will be seperated to guest cart and user cart or logged-in user controlling by cart database. Cart for each users will be persistent even when close the browser/ refresh page or log out and log back in.</li>
+                                <li><span className='text-primary'>User Authentication </span> :
+                                    <div> - Secure registration with condition on password. </div>
+                                    <div> - Control username and email duplication using user database and login functionalities</div>
+                                </li>
+                                <li><span className='text-primary'>Product Display </span> : A wide range of diving equipment, divided into 7 product category or brand of the product with product detail information on single detail page. You can also sort by price, browse products by title, and filter products by brand and category. </li>
+                                <li><span className='text-primary'>Cart System </span> :
+                                    <div> - Add, edit cart ,remove items in cart. </div>
+                                    <div> - Cart will be seperated to guest cart and user cart or logged-in user controlling by cart database.</div>
+                                    <div> - Cart for each users will be persistent even when close the browser/ refresh page or log out and log back in.</div></li>
                                 <li><span className='text-primary'>Wishlist </span> : Save products to view and purchase later for both guest and logged-in user</li>
                                 <li><span className='text-primary'>Product Reviews </span> : Read product reviews from other divers or write your own but each product only allow 1 review from user or guest.</li>
-                                <li><span className='text-primary'>Order History </span> : Logged-in user will be able to see their order history after purchase.</li>
-                                <li><span className='text-primary'> Profile Update </span> : Logged-in user will be able to update their personal information, password and shipping address. </li>
+                                <li><span className='text-primary'>Order History </span> : Logged-in users will be able to see their order history after purchase.</li>
+                                <li><span className='text-primary'> Profile Update </span> : Logged-in users will be able to update their personal information, password and shipping address. </li>
                             </ul>
                         </Col>
 
@@ -69,6 +75,7 @@ const Readme = () => {
                                     <li><span className='text-primary'> Vite and React.js </span> : For building UI components. </li>
                                     <li><span className='text-primary'> React Router </span> : For handling route and navigation. </li>
                                     <li><span className='text-primary'> Bootstrap and React Bootstrap </span> : For responsive styling and layout.</li>
+                                    <li><span className='text-primary'> Regex </span> : To control password condition</li>
 
                                 </ul>
                             </Col>

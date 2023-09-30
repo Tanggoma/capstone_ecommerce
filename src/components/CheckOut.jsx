@@ -7,16 +7,20 @@ import { CartContext } from '../context/CartContext';
 import { getProductDetail, postOrderHistory } from '../api';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
+import AuthContext from '../context/AuthContext';
+
 const CheckOut = () => {
 
     //Context
+    const { state } = useContext(AuthContext);
     const { cart, handleDeleteFromCart, clearCart, handleUpdateCart } = useContext(CartContext);
+
+    //State
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
     const [totalAmount, setTotalAmount] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [quantityOverLimit, setQuantityOverLimit] = useState(false);
-
 
     // Modal to edit cart quantity
     const [show, setShow] = useState(false);
@@ -178,17 +182,20 @@ const CheckOut = () => {
 
             <Row>
                 <Col md={8}>
-                    <Card className="mb-4">
-                        <Card.Body className='bg-light'>
-                            <h5 className='font-weight-bold text-secondary'>My Account</h5>
-                            <hr />
-                            <p>Already have an account with us?</p>
-                            <Button variant="danger" className="mb-2" onClick={handleSignIn}>Sign In</Button>
-                            <span className='text-secondary mx-3'> or </span>
-                            <Button variant="link text-danger" onClick={handleRegister}>Create a new Scuba Commerce account</Button>
-                        </Card.Body>
-                    </Card>
 
+                    {state.user ?
+                        null :
+                        <Card className="mb-4">
+                            <Card.Body className='bg-light'>
+                                <h5 className='font-weight-bold text-secondary'>My Account</h5>
+                                <hr />
+                                <p>Already have an account with us?</p>
+                                <Button variant="danger" className="mb-2" onClick={handleSignIn}>Sign In</Button>
+                                <span className='text-secondary mx-3'> or </span>
+                                <Button variant="link text-danger" onClick={handleRegister}>Create a new Scuba Commerce account</Button>
+                            </Card.Body>
+                        </Card>
+                    }
                     <Card className="mb-4">
                         <Card.Body className='bg-light'>
                             <h5 className='font-weight-bold text-secondary'>Shipping Method</h5>
